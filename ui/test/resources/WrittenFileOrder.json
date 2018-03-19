@@ -1,0 +1,17 @@
+{
+  "entityId": {
+    "absoluteFilePath": "/tmp/nfs/vfuk/vfukmnp01/SK201701121108VF005.REQ",
+    "targetNetworkOperatorCode": "EE"
+  },
+  "eventCount": 1,
+  "fileType": "REQ",
+  "lastEventAt": "2017-05-31T12:22:31.32+01:00[Europe/London]",
+  "pendingRecordsCount": 1,
+  "records": [
+    {
+      "transactionNumber": "TRANS1"
+    }
+  ],
+  "status": "COMPLETED",
+  "writtenAt": "2017-05-31T12:22:31.32+01:00[Europe/London]"
+}

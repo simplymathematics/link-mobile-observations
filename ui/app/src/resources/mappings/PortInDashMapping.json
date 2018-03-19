@@ -1,0 +1,48 @@
+{
+  "title": "Received Files2",
+  "name": "PortInDashMapping",
+  "filterTypes": ["completed"],
+  "mappings": [
+    {
+      "displayName": "Id",
+      "path": "$.id.value",
+      "searchable": true,
+      "columnWidth": 100,
+      "flexGrow": 1,
+      "isKey": true
+    },
+    {
+      "displayName": "Type",
+      "path": "$.id.type",
+      "searchable": true,
+      "columnWidth": 260
+    },
+    {
+      "displayName": "Timestamp",
+      "path": "$.ts",
+      "searchable": true,
+      "columnWidth": 260
+    },
+    {
+      "displayName": "Latitude",
+      "path": "$.location.lon",
+      "type" : "STRING",
+      "searchable": true,
+      "columnWidth": 360
+    },
+    {
+      "displayName": "Longitude",
+      "path": "$.location.lat",
+      "type": "STRING",
+      "searchable": true,
+      "columnWidth": 360
+    },
+    {
+      "displayName": "Accuracy",
+      "path": "$.location.horizontal_accuracy",
+      "type": "STRING",
+      "searchable": true,
+      "columnWidth": 360
+    }
+  ]
+}

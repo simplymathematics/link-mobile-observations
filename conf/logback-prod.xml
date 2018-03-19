@@ -1,0 +1,61 @@
+<!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
+<configuration>
+
+    <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${application.home:-.}/logs/application.log</file>
+        <encoder>
+            <pattern>[${ENVIRONMENT_NAME:-default}] %date [%level] from %logger in %thread - %message%n%xException</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date [${ENVIRONMENT_NAME:-default}]%coloredLevel %logger{15} - %message%n%xException{10}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT"/>
+    </appender>
+
+    <logger name="play" level="INFO"/>
+    <logger name="application" level="DEBUG"/>
+    <logger name="connector.globalreach.GlobalReachConnector" level="DEBUG"/>
+    <logger name="controllers" level="DEBUG"/>
+
+    <logger name="services" level="DEBUG"/>
+
+    <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
+    <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF"/>
+    <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF"/>
+    <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF"/>
+    <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF"/>
+
+    <appender name="splunk-appender" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+        <url>https://http-inputs-linknyc.splunkcloud.com</url>
+        <token>2C8AAACA-BC25-581C-81F4-EF5E80AE99F0</token>
+        <disableCertificateValidation>true</disableCertificateValidation>
+        <source>link-mobile-app-${ENVIRONMENT_NAME:-local}</source>
+        <sourcetype>logs</sourcetype>
+        <batch_size_count>5</batch_size_count>
+        <type>Raw</type>
+        <channel>2C8AAACA-BC25-581C-81F4-EF5E80AE99F0</channel>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date %msg</pattern>
+        </layout>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="ASYNCFILE"/>
+        <appender-ref ref="ASYNCSTDOUT"/>
+        <appender-ref ref="splunk-appender"/>
+    </root>
+
+</configuration>

@@ -1,0 +1,70 @@
+{
+  "sub-port-dash-req-record-received-circle": {
+    "data": {
+      "id": "SPD-001",
+      "title": "REQ Record Summary Wheel",
+      "text": "The summary wheel indicates the number of sub porting MSISDNs that have received REQ Records indicating they are porting today.",
+      "selector": "#sub-port-dash-req-record-received-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "sub-port-dash-routing-updated-circle": {
+    "data": {
+      "id": "SPD-002",
+      "title": "Routing Updated Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have been updated on the switch. Any MSISDNs not in the Routing Updated state should be investigated as the necessary update may not have been successfully made to the switch.",
+      "selector": "#sub-port-dash-routing-updated-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "sub-port-dash-file-processed-circle": {
+    "data": {
+      "id": "SPD-003",
+      "title": "File Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have completed all file based activities (generated and/or received). Please note that this information pertains to files being prepared for sending as opposed to being actually sent.",
+      "selector": "#sub-port-dash-file-processed-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "sub-port-dash-completed-circle": {
+    "data": {
+      "id": "SPD-004",
+      "title": "Completed Summary Wheel",
+      "text": "The summary wheel indicates that all activities have been completed for the Sub Port order.",
+      "selector": "#sub-port-dash-completed-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  }
+}

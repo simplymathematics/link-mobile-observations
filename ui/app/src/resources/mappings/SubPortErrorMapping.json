@@ -1,0 +1,57 @@
+{
+  "title": "Sub Port Errors",
+  "name": "SubPortErrorMapping",
+  "filterTypes": ["outstanding"],
+  "mappings": [
+    {
+      "displayName": "Received Date",
+      "path": "$.recordReceivedAt",
+      "type" : "DATE",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "Porting MSISDN",
+      "path": "$.portingMsisdn",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "RNO",
+      "path": "$.noDetails.rno",
+      "searchable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.noDetails.dno",
+      "searchable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Failure Code",
+      "path": "$.failure.failureCode",
+      "searchable": true,
+      "columnWidth": 240,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Failure Description",
+      "path": "$.failure.failureDescription",
+      "columnWidth": 260,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Time of Failure",
+      "path": "$.failure.failedAt",
+      "searchable": true,
+      "columnWidth": 300
+    },
+    {
+      "displayName": "Retry Button",
+      "path": "",
+      "searchable": false,
+      "columnWidth": 120
+    }
+  ]
+}

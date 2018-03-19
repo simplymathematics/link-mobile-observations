@@ -1,0 +1,49 @@
+{
+  "title": "Sub Port List",
+  "name": "SubPortExpectedMapping",
+  "filterTypes": ["outstanding", "completed"],
+  "mappings": [
+    {
+      "displayName": "Received Date",
+      "path": "$.recordReceivedAt",
+      "type" : "DATE",
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Porting MSISDN",
+      "path": "$.entityId.portingMsisdn",
+      "searchable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "RNO",
+      "path": "$.noDetails.rno",
+      "searchable": true,
+      "columnWidth": 60,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.noDetails.dno",
+      "searchable": true,
+      "columnWidth": 60,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Error",
+      "path": "",
+      "searchable": false,
+      "columnWidth": 60,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Status",
+      "path": "$.status",
+      "searchable": true,
+      "columnWidth": 180,
+      "flexGrow": 1
+    }
+  ]
+}

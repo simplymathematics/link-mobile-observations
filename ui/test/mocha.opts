@@ -1,0 +1,4 @@
+test
+--recursive
+--require babel-register
+--reporter=nyan

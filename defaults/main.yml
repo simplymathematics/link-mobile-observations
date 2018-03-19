@@ -1,0 +1,16 @@
+---
+stack: "{{ env }}-{{ appname }}"
+region: us-west-2
+env: "{{ lookup('env','USER') | default('qa') }}"
+eb_strategy: blue-green
+instance_type: t2.small
+key_name: common-tardis-ops-dev-v1
+phoenix_mode: on
+
+app_output_dir: "/tmp/{{ appname }}-output-{{ env }}"
+eb_deployer_yml: "eb_deployer-{{ env }}-{{ region }}.yml"
+solution_stack_name: "64bit Amazon Linux 2016.03 v2.1.0 running Docker 1.9.1"
+target: "../target/aws/{{ appname }}.zip"
+logstash_host: broker.internal.linksvc.com
+logstash_port: 6379
+idle_timeout: 300

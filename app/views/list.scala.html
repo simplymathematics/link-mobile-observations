@@ -1,0 +1,45 @@
+@( observations: scala.collection.immutable.List[Observation])
+
+@import models.Observation
+
+<!DOCTYPE html>
+<html lang="en" class="index-page">
+    <head>
+        <meta charset="UTF-8">
+        <title>Paddington</title>
+        <link rel="stylesheet" href="./styles/main.css">
+        <link rel="icon" href="./images/Paddington_Icon.png"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+    <body id="body-index">
+        <table class="table--statement flush--bottom">
+            <thead>
+                <tr>
+                    <th> ID  </th>
+                    <th> ID type </th>
+                    <th >TS</th>
+                    <th >long</th>
+                    <th >lat</th>
+                    <th >...</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for(p <- observations) {
+                    <tr>
+                        <td>@p.id.value</td>
+                        <td>@p.t</td>
+                        <td>@p.toDate</td>
+                        <td>@p.location.lon</td>
+                        <td>@p.location.lat</td>
+                        <td></td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+
+
+    </body>
+</html>

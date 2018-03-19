@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+LINK_ENV=${LINK_ENV:-dev}
+APPNAME=${APPNAME:-link-mobile-observations}
+
+echo Preparing deploy for ${LINK_ENV}
+
+if [ "${BUILDKITE}" == "true" ];
+then
+    buildkite-agent artifact download target/aws/"${APPNAME}"*.zip .
+fi
+
+
+cd ansible || exit
+ansible-galaxy install -f -r requirements.yml
+ansible-playbook -i ${LINK_ENV} ${APPNAME}.yml -e "appname=${APPNAME} env=${LINK_ENV}"

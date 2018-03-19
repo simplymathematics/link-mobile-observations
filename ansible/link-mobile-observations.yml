@@ -1,0 +1,7 @@
+---
+- name: provision link-mobile-observations
+  hosts: localhost
+  vars_files:
+    - "group_vars/{{ appname }}/vars"
+  roles:
+    - eb-deployments

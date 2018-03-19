@@ -1,0 +1,20 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /index                      controllers.IndexController.index
+GET     /list                       controllers.IndexController.list
+GET     /list/json                       controllers.IndexController.json
+
+# Websocket
+GET     /ws                         controllers.WebsocketController.ws
+
+GET           /health                         controllers.HealthController.health
+
+GET           /swagger.json                   controllers.ApiHelpController.getResources
+
+# Assets
+GET     /ui/*file                   com.github.mmizutani.playgulp.GulpAssets.at(file)
+GET     /*file                      com.github.mmizutani.playgulp.GulpAssets.at(file)
+
+

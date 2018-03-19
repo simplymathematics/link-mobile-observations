@@ -1,0 +1,10 @@
+---
+- src: ssh://git@github.com/LinkNYC/eb-deployments.git
+  scm: git
+  version: master
+  path: roles/
+
+- src: ssh://git@github.com/LinkNYC/eb-dd-agent.git
+  scm: git
+  version: master
+  path: roles/
