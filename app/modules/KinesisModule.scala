@@ -1,33 +1,25 @@
 package modules
 
-import java.net.InetAddress
 import java.util.Date
-
-import scala.concurrent.duration._
-import com.amazonaws.services.kinesis.clientlibrary.exceptions.{InvalidStateException, ShutdownException, ThrottlingException}
-import com.amazonaws.services.kinesis.clientlibrary.interfaces.{IRecordProcessor, IRecordProcessorCheckpointer, IRecordProcessorFactory}
-import com.amazonaws.services.kinesis.clientlibrary.lib.worker.KinesisClientLibConfiguration
-import com.amazonaws.services.kinesis.clientlibrary.lib.worker.InitialPositionInStream
-import com.amazonaws.services.kinesis.clientlibrary.lib.worker.Worker
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import javax.inject.{Inject, Named}
 
 import akka.actor.{ActorRef, ActorSystem}
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
-import kinesis._
+import com.amazonaws.services.kinesis.clientlibrary.interfaces.{IRecordProcessor, IRecordProcessorFactory}
+import com.amazonaws.services.kinesis.clientlibrary.lib.worker.{KinesisClientLibConfiguration, Worker}
 import com.google.inject.AbstractModule
+import javax.inject.{Inject, Named}
+import kinesis._
 import models.Ping
 import play.api.libs.concurrent.AkkaGuiceSupport
 import play.api.{Configuration, Environment, Logger}
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
 
 class KinesisModule(environment: Environment, configuration: Configuration) extends AbstractModule with AkkaGuiceSupport {
 
   override def configure() = {
     bind(classOf[Test]).asEagerSingleton
-
-
   }
 }
 
@@ -73,7 +65,7 @@ class Test @Inject()(system: ActorSystem,
       s"programmatic-uda-${kinesisStream}-observations",
       cp,
       workerId)
-    val since = new Date(System.currentTimeMillis() - 2.minutes.toMillis)
+    val since = new Date(System.currentTimeMillis() - 1.days.toMillis)
     logger.info(s"since $since")
     kinesisClientLibConfiguration.withTimestampAtInitialPositionInStream( since )
 

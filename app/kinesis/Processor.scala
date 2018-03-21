@@ -26,7 +26,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
   val NUM_RETRIES = 20
 
   // Checkpoint about once a minute
-  val CHECKPOINT_INTERVAL_MILLIS = 5.minutes.toMillis
+  val CHECKPOINT_INTERVAL_MILLIS = 2.minutes.toMillis
   var nextCheckpointTimeInMillis = 0L
 
   val decoder = Charset.forName("UTF-8").newDecoder

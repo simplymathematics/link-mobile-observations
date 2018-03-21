@@ -24,27 +24,40 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   }
 
-  private def process(obs: List[Observation]): Response = {
-//    val means: List[(Observation, Int)] = Try {
-//      val  k = 2
-//      val clusters: Map[Int, List[Observation]] =
-//        obs.zipWithIndex.groupBy(
-//          x => x._2 % k) transform (
-//          (i: Int, p: List[(Observation, Int)]) => for (x <- p) yield x._1)
-//
-//      IndexController.iterate(clusters, obs)
-//    } match {
-//      case Failure(ex) => ex.printStackTrace(); List[(Observation, Int)]()
-//      case Success(m) => m
-//    }
-     Response.build(obs, List[(Observation, Int)]())
+  private def process(obs: List[Observation], k: Boolean = false): Response = {
+    if (k) {
+      val means: List[(Observation, Int)] = Try {
+        val k = 2
+        val clusters: Map[Int, List[Observation]] =
+          obs.zipWithIndex.groupBy(
+            x => x._2 % k) transform (
+            (i: Int, p: List[(Observation, Int)]) => for (x <- p) yield x._1)
+
+        IndexController.iterate(clusters, obs)
+      } match {
+        case Failure(ex) => ex.printStackTrace(); List[(Observation, Int)]()
+        case Success(m) => m
+      }
+      Response.build(obs, means)
+    } else {
+      Response.build(obs, List[(Observation, Int)]())
+    }
+
   }
 
 
+  def json2 = Action.async {
+    cache.get[List[Observation]](observations).map {
+      case Some(obs) =>
+        Ok(Json.toJson(process(obs,true)))
+      case None =>
+        Ok("No data")
+    }
+  }
   def json = Action.async {
     cache.get[List[Observation]](observations).map {
       case Some(obs) =>
-        Ok( Json.toJson( process(obs) ) )
+        Ok(Json.toJson(process(obs)))
       case None =>
         Ok("No data")
     }
@@ -61,13 +74,12 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
   }
 
 
-
 }
 
 object IndexController {
 
-  def iterate(clusters: Map[Int, List[Observation]], points: List[Observation]): List[(Observation,Int)] = {
-    val unzippedClusters =  (clusters: Iterator[(Observation, Int)]) => clusters.map(cluster => cluster._1)
+  def iterate(clusters: Map[Int, List[Observation]], points: List[Observation]): List[(Observation, Int)] = {
+    val unzippedClusters = (clusters: Iterator[(Observation, Int)]) => clusters.map(cluster => cluster._1)
 
     // find cluster means
     val means =
@@ -88,14 +100,14 @@ object IndexController {
 
     render(newClusters)
 
-    newClusters.mapValues(list=>  (clusterMean(list), list.size)).values.toList
+    newClusters.mapValues(list => (clusterMean(list), list.size)).values.toList
   }
 
   def clusterMean(points: List[Observation]): Observation = {
     val cumulative = points.reduceLeft((a: Observation, b: Observation) =>
-      new Observation(ts = 0, id = TypeId("",""),location = Location(lon= a.location.lon + b.location.lon, lat = a.location.lat + b.location.lat,horizontal_accuracy = 0) ))
+      new Observation(ts = 0, id = TypeId("", ""), location = Location(lon = a.location.lon + b.location.lon, lat = a.location.lat + b.location.lat, horizontal_accuracy = 0)))
 
-    return new Observation( ts = 0, id = TypeId("",""),location = Location(lon= cumulative.location.lon / points.length, lat = cumulative.location.lat / points.length, horizontal_accuracy = 0))
+    return new Observation(ts = 0, id = TypeId("", ""), location = Location(lon = cumulative.location.lon / points.length, lat = cumulative.location.lat / points.length, horizontal_accuracy = 0))
   }
 
   def render(points: Map[Int, List[Observation]]) {
@@ -105,9 +117,9 @@ object IndexController {
       val meanPoint = clusterMean(points(clusterNumber))
       System.out.println("  Mean: " + meanPoint)
 
-//      for (j <- 0 to points(clusterNumber).length - 1) {
-//        System.out.println("    " + points(clusterNumber)(j) + ")")
-//      }
+      //      for (j <- 0 to points(clusterNumber).length - 1) {
+      //        System.out.println("    " + points(clusterNumber)(j) + ")")
+      //      }
 
       System.out.println("XXXX")
     }
@@ -117,13 +129,13 @@ object IndexController {
 
 object test extends App {
   val k: Int = 2
-  val obs = List(Observation(10, TypeId("",""), Location(0,0,0)), Observation(11, TypeId("",""), Location(10,10,0)))
+  val obs = List(Observation(10, TypeId("", ""), Location(0, 0, 0)), Observation(11, TypeId("", ""), Location(10, 10, 0)))
   val clusters: Map[Int, List[Observation]] =
     obs.zipWithIndex.groupBy(
       x => x._2 % k) transform (
       (i: Int, p: List[(Observation, Int)]) => for (x <- p) yield x._1)
 
-//  System.out.println("Initial State: ")
-//  IndexController.render(clusters)
- IndexController.iterate(clusters, obs)
+  //  System.out.println("Initial State: ")
+  //  IndexController.render(clusters)
+  IndexController.iterate(clusters, obs)
 }
