@@ -28,6 +28,9 @@
     <logger name="application" level="DEBUG"/>
     <logger name="connector.globalreach.GlobalReachConnector" level="DEBUG"/>
     <logger name="controllers" level="DEBUG"/>
+    <logger name="modules" level="DEBUG"/>
+    <logger name="actors" level="DEBUG"/>
+    <logger name="kinesis" level="DEBUG"/>
 
     <logger name="services" level="DEBUG"/>
 
@@ -37,25 +40,9 @@
     <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF"/>
     <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF"/>
 
-    <appender name="splunk-appender" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
-        <url>https://http-inputs-linknyc.splunkcloud.com</url>
-        <token>2C8AAACA-BC25-581C-81F4-EF5E80AE99F0</token>
-        <disableCertificateValidation>true</disableCertificateValidation>
-        <source>link-mobile-app-${ENVIRONMENT_NAME:-local}</source>
-        <sourcetype>logs</sourcetype>
-        <batch_size_count>5</batch_size_count>
-        <type>Raw</type>
-        <channel>2C8AAACA-BC25-581C-81F4-EF5E80AE99F0</channel>
-
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%date %msg</pattern>
-        </layout>
-    </appender>
-
     <root level="WARN">
         <appender-ref ref="ASYNCFILE"/>
         <appender-ref ref="ASYNCSTDOUT"/>
-        <appender-ref ref="splunk-appender"/>
     </root>
 
 </configuration>
