@@ -1,6 +1,7 @@
 package modules
 
 import java.net.InetAddress
+import java.util.Date
 
 import scala.concurrent.duration._
 import com.amazonaws.services.kinesis.clientlibrary.exceptions.{InvalidStateException, ShutdownException, ThrottlingException}
@@ -72,8 +73,9 @@ class Test @Inject()(system: ActorSystem,
       s"programmatic-uda-${kinesisStream}-observations",
       cp,
       workerId)
-
-    kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON)
+    val since = new Date(System.currentTimeMillis() - 2.minutes.toMillis)
+    logger.info(s"since $since")
+    kinesisClientLibConfiguration.withTimestampAtInitialPositionInStream( since )
 
     val recordProcessorFactory = new ProcessorFactory(proxyActor)
     val worker = new Worker(recordProcessorFactory, kinesisClientLibConfiguration)

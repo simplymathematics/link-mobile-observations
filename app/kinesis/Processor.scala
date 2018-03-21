@@ -14,6 +14,7 @@ import models.{ObservationHolder, UpdateMessage}
 import play.api.Logger
 
 import scala.collection.JavaConverters._
+import scala.concurrent.duration._
 
 class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
@@ -22,10 +23,10 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
   // Backoff and retry settings
   val BACKOFF_TIME_IN_MILLIS = 3000L
-  val NUM_RETRIES = 10
+  val NUM_RETRIES = 20
 
   // Checkpoint about once a minute
-  val CHECKPOINT_INTERVAL_MILLIS = 60000L
+  val CHECKPOINT_INTERVAL_MILLIS = 5.minutes.toMillis
   var nextCheckpointTimeInMillis = 0L
 
   val decoder = Charset.forName("UTF-8").newDecoder
@@ -55,7 +56,6 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
 
   override def processRecords(records: util.List[Record], checkpointer: IRecordProcessorCheckpointer): Unit = {
-    println(s" processRecords")
     logger.info("Processing " + records.size + " records from " + kinesisShardId)
 
     // Process records and perform all exception handling.

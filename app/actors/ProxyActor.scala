@@ -33,7 +33,7 @@ class ProxyActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) 
         case None =>
           cache.set(observations,List[Observation](observation))
         case Some(list)  =>
-          cache.set(observations,  observation :: list , expiration = 8 hours)
+          cache.set(observations,  observation :: list)
       }
 
 
@@ -42,7 +42,7 @@ class ProxyActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) 
       cache.set(key, observation)
 
       watchers.foreach{
-        w => println(s"UpdateMEssage ${observation.ts}...")
+        w => println(s"UpdateMessage ${observation.ts}...")
               w._2.foreach{ actor =>
                 log.info(s"Actor ${actor}")
                 actor ! observation

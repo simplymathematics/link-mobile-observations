@@ -65,9 +65,9 @@ public class RecordProcessor implements IRecordProcessor {
             String neVal = new String(ba, 0, i, "UTF-8");
 
 
-            System.out.println(" String "+ ba + " " + i);
-            System.out.println(" String "+ ba[0]+ba[1]+ba[2]+ba[3]+ba[4]);
-            System.out.println(" String #"+ neVal + "#");
+//            System.out.println(" String "+ ba + " " + i);
+//            System.out.println(" String "+ ba[0]+ba[1]+ba[2]+ba[3]+ba[4]);
+//            System.out.println(" String #"+ neVal + "#");
             Observations.parse(neVal);
 
         } catch (DataFormatException e) {

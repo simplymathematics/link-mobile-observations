@@ -1,7 +1,7 @@
 env: qa
 region: us-east-1
 key_name: link-non-prod-feb-2018
-instance_type: t2.small
+instance_type: t2.medium
 cert: arn:aws:acm:us-east-1:028957328603:certificate/879b03f9-a895-4ec0-a8c3-b23ecaf5125e
 dynamodb_url: jdbc:mysql://fuhgavi-mysql.cxuxt6izrok4.us-east-1.rds.amazonaws.com:3306/fuhgavi-qa?characterEncoding=UTF-8
 vpc:

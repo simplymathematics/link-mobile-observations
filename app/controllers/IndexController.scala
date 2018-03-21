@@ -25,19 +25,19 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
   }
 
   private def process(obs: List[Observation]): Response = {
-    val means: List[(Observation, Int)] = Try {
-      val  k = 2
-      val clusters: Map[Int, List[Observation]] =
-        obs.zipWithIndex.groupBy(
-          x => x._2 % k) transform (
-          (i: Int, p: List[(Observation, Int)]) => for (x <- p) yield x._1)
-
-      IndexController.iterate(clusters, obs)
-    } match {
-      case Failure(ex) => ex.printStackTrace(); List[(Observation, Int)]()
-      case Success(m) => m
-    }
-     Response.build(obs, means)
+//    val means: List[(Observation, Int)] = Try {
+//      val  k = 2
+//      val clusters: Map[Int, List[Observation]] =
+//        obs.zipWithIndex.groupBy(
+//          x => x._2 % k) transform (
+//          (i: Int, p: List[(Observation, Int)]) => for (x <- p) yield x._1)
+//
+//      IndexController.iterate(clusters, obs)
+//    } match {
+//      case Failure(ex) => ex.printStackTrace(); List[(Observation, Int)]()
+//      case Success(m) => m
+//    }
+     Response.build(obs, List[(Observation, Int)]())
   }
 
 
@@ -51,10 +51,8 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
   }
 
   def list = Action.async { _ =>
-    //      println(s"getting data ${cache.sync.c}")
     cache.get[List[Observation]](observations).map {
       case Some(obs) =>
-//        println(s"getting data ${obs}")
         Ok(views.html.list(process(obs)))
       case None =>
         println(s"no data")
