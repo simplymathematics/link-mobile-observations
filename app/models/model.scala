@@ -53,7 +53,7 @@ case class Response(observations: List[Observation], means: List[(Observation,In
 
 object Response {
   def build(list: List[Observation], means: List[(Observation, Int)]) = {
-    Response(list, means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
+    Response(list.take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
 
   }
 }
