@@ -29,5 +29,5 @@ elb_subnets: "{{ vpc.stack_outputs.subnetPublic0 }},{{ vpc.stack_outputs.subnetP
 phoenix_mode: off
 
 asg_min_size: 1
-asg_max_size: 2
+asg_max_size: 1
 
