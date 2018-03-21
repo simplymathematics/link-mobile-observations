@@ -41,7 +41,7 @@ class Test @Inject()(system: ActorSystem,
                      configuration: Configuration)(implicit ec: ExecutionContext) {
 
   val env = configuration.get[String]("environment")
-//  val hostname: String = InetAddress.getLocalHost.getHostName
+  //  val hostname: String = InetAddress.getLocalHost.getHostName
   val logger = Logger(getClass)
   system.scheduler.schedule(90.milli, 30.seconds) {
     Logger("ping").info("pinging")
@@ -53,31 +53,41 @@ class Test @Inject()(system: ActorSystem,
   import java.util.UUID
 
   val kinesisStream = env match {
+    case "local" => "test"
     case "qa" => "test"
     case x: String => x
+  }
+
+
+  val app_table = env match {
+    case "local" => s"link-programmatic-uda-observations-${InetAddress.getLocalHost.getCanonicalHostName}"
+    case default => s"link-programmatic-uda-observations-${env}"
   }
 
   try {
     val cp = new DefaultAWSCredentialsProviderChain
     val workerId: String = InetAddress.getLocalHost.getCanonicalHostName + ":" + UUID.randomUUID
     val kinesisClientLibConfiguration: KinesisClientLibConfiguration = new KinesisClientLibConfiguration(
-      s"link-programmatic-uda-observations-${env}",
+      app_table,
       s"programmatic-uda-${kinesisStream}-observations",
       cp,
       workerId)
 
-    kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.LATEST)
+    kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON)
 
     val recordProcessorFactory = new ProcessorFactory(proxyActor)
     val worker = new Worker(recordProcessorFactory, kinesisClientLibConfiguration)
 
-    System.out.printf("Running %s to process stream %s as worker %s...\n", "SAMPLE_APPLICATION_NAME", "SAMPLE_APPLICATION_STREAM_NAME", workerId)
+    logger.info(s"Running ${workerId} to process stream.")
 
     var exitCode: Int = 0
 
     new Thread(worker).start()
 
-    logger.info(s"Running system in $env  'programmatic-uda-${kinesisStream}-observations' ")
+    logger.info(s"Running system in $env  ")
+    logger.info(s"Kinesis stream  'programmatic-uda-${kinesisStream}-observations' ")
+    logger.info(s"app table: ${app_table} ")
+
   } catch {
     case t: Throwable =>
       System.err.println("Caught throwable while processing data.")

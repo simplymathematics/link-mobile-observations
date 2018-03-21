@@ -1,6 +1,8 @@
-@( observations: scala.collection.immutable.List[Observation])
+
+@( response: Response)
 
 @import models.Observation
+@import models.Response
 
 <!DOCTYPE html>
 <html lang="en" class="index-page">
@@ -12,6 +14,41 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body id="body-index">
+
+        <table class="table--statement flush--bottom">
+
+            @for(p <- response.means) {
+                    <tr>
+                        <td>Kmeans </td>
+                        <td>@p._1.location.lat , @p._1.location.lon #@p._2</td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <table class="table--statement flush--bottom">
+
+            @for(p <- response.idAds) {
+                    <tr>
+                        <td>ids </td>
+                        <td>@p._1 -> @p._2</td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <table class="table--statement flush--bottom">
+
+            @for(p <- response.idAdType) {
+                <tr>
+                    <td>ids type @p._1 -> @p._2</td>
+                </tr>
+            }
+
+        </tbody>
+        </table>
         <table class="table--statement flush--bottom">
             <thead>
                 <tr>
@@ -24,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-            @for(p <- observations) {
+            @for(p <- response.observations) {
                     <tr>
                         <td>@p.id.value</td>
                         <td>@p.t</td>
