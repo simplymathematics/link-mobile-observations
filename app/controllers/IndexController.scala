@@ -1,17 +1,16 @@
 package controllers
 
-//import cats.data.OptionT
-//import cats.Monad
-//import cats.instances.list._
-//import cats.syntax.applicative._
+import cats.data.OptionT
+import cats.instances.future._
 //import cats.implicits._
 
 import javax.inject.Inject
 import models.{Observation, Response}
+import models.implicits._
 import play.api.Logger
 import play.api.cache.AsyncCacheApi
 import play.api.libs.json.Json
-import play.api.mvc.InjectedController
+import play.api.mvc.{InjectedController, Result}
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 
@@ -28,62 +27,42 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   }
 
-  private def process(obs: List[Observation]) = {
-    cache.get[List[(Observation, Int)]]("means") map {
-      case Some(k) => Response.build(obs, k)
-      case None => Response.build(obs, List[(Observation, Int)]())
+
+  def data(): OptionT[Future, Result] = {
+    cache.get[List[Observation]](observations).map(p => println(s"Obs ${p.size}") )
+    cache.get[List[(Observation,Int)]]("means").map(p => println(s"Km ${p}") )
+    for {
+      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
+      res <- OptionT.some( Ok(Json.toJson(Response.build(obs2, means2))))
+    } yield {
+      println(s" obs ${obs2.size}")
+      println(s" k-m ${means2.size}")
+      res
     }
   }
 
-//  def kk() = {
-//    import cats.data.OptionT
-//    val response: OptionT[Future, Response] = for {
-//      obs <- OptionT(cache.get[List[Observation]](observations))
-//      means <- OptionT(cache.get[List[(Observation, Int)]]("means"))
-//    } yield Response.build(obs, means)
-//    response
-//    response.getOrElse( Response.empty).value
-//    Json.toJson(response.getOrElse( Response.empty).value)
-//  }
 
-//  def json3 = Action.async {
-//      kk() match {
-//        case Some(o) => Ok(o.)
-//      }
-//    Future.successful( Ok(kk()) )
-//  }
+//    response.getOrElseF( Future {Ok("no data")})
 
-  def json2 = Action.async {
-    val init = System.currentTimeMillis()
-    cache.get[List[Observation]](observations).map {
-      case Some(obs) =>
-        Ok(Json.toJson(process(obs))).withHeaders("X-time-consumed" -> (System.currentTimeMillis() - init).toString)
-      case None =>
-        Ok("No data").withHeaders("X-time-consumed" -> (System.currentTimeMillis() - init).toString)
-    }
-  }
+
 
   def json = Action.async {
-    cache.get[List[Observation]](observations).map {
-      case Some(obs) =>
-        Ok(Json.toJson(process(obs)))
-      case None =>
-        Ok("No data")
-    }
+    data().getOrElseF( Future {Ok("no data")})
   }
 
-  def list = Action.async { _ =>
-    cache.get[List[Observation]](observations).map {
-      case Some(obs) =>
-        import scala.concurrent.duration._
-        val res = Await.result(process(obs), 5 minute)
-        Ok(views.html.list(res))
 
-      case None =>
-        println(s"no data")
-        Ok("No data")
-    }
+  def list = Action.async {
+    val result = for {
+      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
+      res <- OptionT.some( Response.build(obs2, means2) )
+    } yield Ok(views.html.list(res))
+
+    result.getOrElse(Ok("No data"))
   }
+
+
 
 
 }

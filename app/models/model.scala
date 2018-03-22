@@ -9,7 +9,7 @@ import play.api.libs.json.{Format, JsObject, JsPath, Json}
 
 import scala.util.Try
 
-object Observations {
+object implicits {
 
   lazy implicit val typeIdFormat = Json.format[TypeId]
   lazy implicit val locationFormat = Json.format[Location]

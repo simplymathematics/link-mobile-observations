@@ -28,7 +28,7 @@ class UserEventActor @Inject()(@Assisted out: ActorRef,
     //dataSpammerActor ! WatchEvents()
   }
 
-  import models.Observations._
+  import models.implicits._
   override def receive: Receive = LoggingReceive {
 //    case MessageUpdate(message) => out ! message
     case _ : Status => //Akka sending status success. We need to handle receiving it, but don't need to do anything with it.

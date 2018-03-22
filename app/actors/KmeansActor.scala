@@ -10,6 +10,8 @@ import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success, Try}
 import com.google.inject.Singleton
 
+import scala.collection.immutable
+
 
 case class CalculateKMeans()
 
@@ -18,10 +20,11 @@ class KmeansActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext)
 
   override def receive: Receive = {
     case CalculateKMeans() =>
-      cache.get[List[Observation]]("observation") map {
+      cache.get[List[Observation]]("observations") map {
         case Some(obs) =>
           val k = KMeans.process(obs)
-          cache.set("observation", k)
+          log.info(s"k ${k}")
+          cache.set("means", k)
         case None => log.warning("No observations to calculate")
       }
 
@@ -34,7 +37,7 @@ class KmeansActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext)
 object KMeans {
 
   val logger = Logger(getClass)
-  def process(obs: List[Observation]) = {
+  def process(obs: List[Observation]): List[(Observation, Int)] = {
     val means: List[(Observation, Int)] = Try {
       val k = 2
       val clusters: Map[Int, List[Observation]] =
@@ -48,7 +51,7 @@ object KMeans {
       case Failure(ex) => ex.printStackTrace(); List[(Observation, Int)]()
       case Success(m) => m
     }
-
+    means
   }
 
   def iterate(clusters: Map[Int, List[Observation]], points: List[Observation]): List[(Observation, Int)] = {
