@@ -2,6 +2,7 @@ package modules
 
 import java.util.Date
 
+import actors.CalculateKMeans
 import akka.actor.{ActorRef, ActorSystem}
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.{IRecordProcessor, IRecordProcessorFactory}
@@ -31,14 +32,21 @@ class ProcessorFactory(proxyActor: ActorRef) extends IRecordProcessorFactory {
 
 class Test @Inject()(system: ActorSystem,
                      @Named("proxyActor") proxyActor: ActorRef,
+                     @Named("kActor") kActor: ActorRef,
                      configuration: Configuration)(implicit ec: ExecutionContext) {
 
   val env = configuration.get[String]("environment")
   //  val hostname: String = InetAddress.getLocalHost.getHostName
   val logger = Logger(getClass)
+
   system.scheduler.schedule(90.milli, 30.seconds) {
     Logger("ping").info("pinging")
     proxyActor ! Ping(System.currentTimeMillis())
+  }
+
+  system.scheduler.schedule( 1 minutes, 10 minutes) {
+    Logger("means").info("kmeans")
+    kActor ! CalculateKMeans()
   }
 
 

@@ -41,7 +41,7 @@ case class Observation(ts: Long, id: TypeId, location: Location) {
   def t() = id.`type`
 
   def dist(p: Observation): Double = {
-      (location.lon - p.location.lon) * (location.lon - p.location.lon) +
+    (location.lon - p.location.lon) * (location.lon - p.location.lon) +
       (location.lat - p.location.lat) * (location.lat - p.location.lat)
   }
 }
@@ -49,11 +49,16 @@ case class Observation(ts: Long, id: TypeId, location: Location) {
 
 case class ObservationHolder(ts: Long, body: ObservationWrapper)
 
-case class Response(observations: List[Observation], means: List[(Observation,Int)], total: Long, idAds: Map[String, Int], idAdType: Map[String, Int] = Map())
+case class Response(observations: List[Observation], means: List[(Observation, Int)], total: Long, idAds: Map[String, Int], idAdType: Map[String, Int] = Map())
 
 object Response {
-  def build(list: List[Observation], means: List[(Observation, Int)]) = {
-    Response(list.take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
+  def empty = Response(List(), List(), 0 , Map())
+
+  def build(list: List[Observation], means: List[(Observation, Int)], k: Boolean = false) = {
+    if (k)
+      Response(list, means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
+    else
+      Response(list.take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
 
   }
 }

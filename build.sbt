@@ -11,10 +11,12 @@ version := "1.0-SNAPSHOT"
 
 lazy val Root = (project in file("."))
   .enablePlugins(PlayJava, UniversalDeployPlugin, DockerPlugin, SbtWeb)
-  .settings(scalacOptions ++= Seq("-deprecation", "-feature"))
+  .settings(scalacOptions ++= Seq("-deprecation", "-feature", "-Ypartial-unification"))
   .settings(javaOptions in IntegrationTest += "-Dlogger.resource=logback-test.xml")
 
 scalaVersion := "2.12.2"
+
+//scalacOptions += "-Ypartial-unification"
 
 libraryDependencies ++= Seq(
   guice,
@@ -28,6 +30,7 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2",
   "com.typesafe.akka" %% "akka-stream" % "2.5.11",
   "com.amazonaws" % "amazon-kinesis-client" % "1.9.0",
+  "org.typelevel" %% "cats-core" % "1.0.1",
   "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.11"
 )
 
