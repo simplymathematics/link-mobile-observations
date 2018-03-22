@@ -29,15 +29,15 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
 
   def data(): OptionT[Future, Result] = {
-    cache.get[List[Observation]](observations).map(p => println(s"Obs ${p.size}") )
-    cache.get[List[(Observation,Int)]]("means").map(p => println(s"Km ${p}") )
+//    cache.get[List[Observation]](observations).map(p => println(s"Obs ${p.size}") )
+//    cache.get[List[(Observation,Int)]]("means").map(p => println(s"Km ${p}") )
     for {
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Ok(Json.toJson(Response.build(obs2, means2))))
     } yield {
-      println(s" obs ${obs2.size}")
-      println(s" k-m ${means2.size}")
+//      println(s" obs ${obs2.size}")
+//      println(s" k-m ${means2.size}")
       res
     }
   }
