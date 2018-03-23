@@ -1,8 +1,7 @@
 package modules
 
 import javax.inject.Inject
-
-import actors.{ProxyActor, UserEventActor, UserEventFactoryActor}
+import actors.{KmeansActor, ProxyActor, UserEventActor, UserEventFactoryActor}
 import akka.actor.{Actor, ActorLogging}
 import akka.event.LoggingReceive
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
@@ -24,6 +23,7 @@ class AwsClientsModule(environment: Environment, configuration: Configuration) e
     bindActorFactory[UserEventActor, UserEventActor.Factory]
     bindActor[MyActor]("myActor")
     bindActor[ProxyActor]("proxyActor")
+    bindActor[KmeansActor]("kActor")
   }
 
 }

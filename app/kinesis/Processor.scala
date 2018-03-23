@@ -45,7 +45,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
     inflater.end()
 
     val value = new String(finalData, "UTF-8")
-    val observations: List[ObservationHolder] = models.Observations.parse(value)
+    val observations: List[ObservationHolder] = models.implicits.parse(value)
 //    println(s" -> #: ${observations.size} ${proxyActor}")
     observations.foreach { obs =>
       proxyActor ! UpdateMessage(obs.body.observation)

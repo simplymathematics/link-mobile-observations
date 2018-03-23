@@ -3,17 +3,14 @@ package kinesis;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.util.Base64;
 import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason;
-import javassist.bytecode.ByteArray;
-import models.Observations;
+import models.implicits;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,7 +21,6 @@ import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessor;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorCheckpointer;
 
 import com.amazonaws.services.kinesis.model.Record;
-import play.api.libs.json.JsValue;
 
 /**
  * Processes records and checkpoints progress.
@@ -68,7 +64,7 @@ public class RecordProcessor implements IRecordProcessor {
 //            System.out.println(" String "+ ba + " " + i);
 //            System.out.println(" String "+ ba[0]+ba[1]+ba[2]+ba[3]+ba[4]);
 //            System.out.println(" String #"+ neVal + "#");
-            Observations.parse(neVal);
+            implicits.parse(neVal);
 
         } catch (DataFormatException e) {
             e.printStackTrace();
