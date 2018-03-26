@@ -27,3 +27,5 @@ vpc:
     subnetPublic2: subnet-e3d496aa
 subnets: "{{ vpc.stack_outputs.subnetPrivate0 }},{{ vpc.stack_outputs.subnetPrivate1 }},{{ vpc.stack_outputs.subnetPrivate2 }}"
 elb_subnets: "{{ vpc.stack_outputs.subnetPublic0 }},{{ vpc.stack_outputs.subnetPublic1 }},{{ vpc.stack_outputs.subnetPublic2 }}"
+asg_min_size: 1
+asg_max_size: 1
