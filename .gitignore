@@ -8,3 +8,4 @@ dynamodb-local/
 *.sc
 ui/app/dist
 ui/node_modules
+npm-debug.log

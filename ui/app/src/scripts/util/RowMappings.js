@@ -3,6 +3,8 @@ import React from "react";
 import JsonPath from "jsonpath";
 import {isCompleted, isOutstanding} from "./FilterUtils";
 import * as Icons from "./TableIcons";
+import moment from 'moment';
+
 window.jQuery = window.$ = $;
 require('materialize-css');
 const {Cell} = require('fixed-data-table-2');
@@ -72,6 +74,8 @@ function isDefinedAndNotEmpty(value) {
 export function simpleContent(order, mapping) {
     if (mapping.type === "DATE") {
         return formatDateTimeAsDate(getJsonValueAsString(order, mapping.path));
+    } else if (mapping.type === "TIMESTAMP") {
+        return formatTimesampAsDate(getJsonValueAsString(order, mapping.path));
     } else if (mapping.type === "CALCULATED") {
         switch (mapping.displayName) {
             case "Expected":
@@ -181,6 +185,10 @@ function getLatestFailure(row) {
 
 function formatDateTimeAsDate(dateTime) {
     return dateTime.split("T")[0]
+}
+
+function formatTimesampAsDate(ts) {
+    return moment(ts * 1000).format("DD-MM-YY HH:mm:ss")
 }
 
 function getJsonValueAsString(row, key) {

@@ -18,11 +18,12 @@ import scala.concurrent.duration._
 
 class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
+  println("initing Processor...")
   val logger = Logger(getClass)
   var kinesisShardId = ""
 
   // Backoff and retry settings
-  val BACKOFF_TIME_IN_MILLIS = 3000L
+  val BACKOFF_TIME_IN_MILLIS =  10.seconds.toMillis
   val NUM_RETRIES = 20
 
   // Checkpoint about once a minute
@@ -75,6 +76,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
   override def initialize(shardId: String): Unit = {
     logger.info("Initializing record processor for shard: " + shardId)
+    println("Initializing record processor for shard: " + shardId)
     kinesisShardId = shardId
   }
 

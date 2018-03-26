@@ -52,13 +52,9 @@ case class ObservationHolder(ts: Long, body: ObservationWrapper)
 case class Response(observations: List[Observation], means: List[(Observation, Int)], total: Long, idAds: Map[String, Int], idAdType: Map[String, Int] = Map())
 
 object Response {
-  def empty = Response(List(), List(), 0 , Map())
+  def empty = Response(List(), List(), 0, Map())
 
-  def build(list: List[Observation], means: List[(Observation, Int)], k: Boolean = false) = {
-    if (k)
-      Response(list, means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
-    else
-      Response(list.take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
-
+  def build(list: List[Observation], means: List[(Observation, Int)]) = {
+    Response(list.sortWith(_.ts > _.ts ).take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
   }
 }

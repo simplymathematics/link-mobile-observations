@@ -8,15 +8,19 @@
 <html lang="en" class="index-page">
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="20" >
         <title>Paddington</title>
-        <link rel="stylesheet" href="./styles/main.css">
-        <link rel="icon" href="./images/Paddington_Icon.png"/>
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="icon" href="/images/Paddington_Icon.png"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body id="body-index">
 
-        <table class="table--statement flush--bottom">
 
+        <table class="table--statement flush--bottom">
+            <tr>
+                <td> <a href="/list"> Home </a> </td>
+            </tr>
             @for(p <- response.means) {
                     <tr>
                         <td>Kmeans </td>
@@ -25,29 +29,33 @@
                     </tr>
                 }
 
-            </tbody>
         </table>
         <table class="table--statement flush--bottom">
 
             @for(p <- response.idAds) {
                     <tr>
                         <td>ids </td>
-                        <td>@p._1 -> @p._2</td>
+                        <td>
+                            <a href="/list/@p._1">@p._1 ->  @p._2 </a>
+                        </td>
 
                     </tr>
                 }
 
-            </tbody>
+
         </table>
         <table class="table--statement flush--bottom">
 
             @for(p <- response.idAdType) {
                 <tr>
-                    <td>ids type @p._1 -> @p._2</td>
+                    <td> idType </td>
+                    <td>
+                        <a href="/type/@p._1">@p._1 ->  @p._2 </a>
+                    </td>
                 </tr>
             }
 
-        </tbody>
+
         </table>
         <table class="table--statement flush--bottom">
             <thead>

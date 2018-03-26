@@ -12,7 +12,7 @@ import play.api.cache.AsyncCacheApi
 import play.api.libs.json.Json
 import play.api.mvc.{InjectedController, Result}
 
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
 
 
 class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) extends InjectedController {
@@ -29,22 +29,14 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
 
   def data(): OptionT[Future, Result] = {
-//    cache.get[List[Observation]](observations).map(p => println(s"Obs ${p.size}") )
-//    cache.get[List[(Observation,Int)]]("means").map(p => println(s"Km ${p}") )
     for {
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Ok(Json.toJson(Response.build(obs2, means2))))
     } yield {
-//      println(s" obs ${obs2.size}")
-//      println(s" k-m ${means2.size}")
       res
     }
   }
-
-
-//    response.getOrElseF( Future {Ok("no data")})
-
 
 
   def json = Action.async {
@@ -57,6 +49,26 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Response.build(obs2, means2) )
+    } yield Ok(views.html.list(res))
+
+    result.getOrElse(Ok("No data"))
+  }
+
+  def filter(id: String) = Action.async {
+    val result = for {
+      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
+      res <- OptionT.some( Response.build(obs2.filter(_.id.value.contains(id)), means2) )
+    } yield Ok(views.html.list(res))
+
+    result.getOrElse(Ok("No data"))
+  }
+
+  def filterByType(typeId: String) = Action.async {
+    val result = for {
+      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
+      res <- OptionT.some( Response.build(obs2.filter(_.id.`type`.contains(typeId)), means2) )
     } yield Ok(views.html.list(res))
 
     result.getOrElse(Ok("No data"))

@@ -29,7 +29,10 @@ class KinesisModule(environment: Environment, configuration: Configuration) exte
 
 class ProcessorFactory(proxyActor: ActorRef) extends IRecordProcessorFactory {
 
-  override def createProcessor(): IRecordProcessor = new Processor(proxyActor)
+  override def createProcessor(): IRecordProcessor = {
+    println("init ProcessorFactory ")
+    new Processor(proxyActor)
+  }
 }
 
 class Test @Inject()(system: ActorSystem,
@@ -50,7 +53,7 @@ class Test @Inject()(system: ActorSystem,
     proxyActor ! Ping(System.currentTimeMillis())
   }
 
-  system.scheduler.schedule( 1 minutes, 30 minutes) {
+  system.scheduler.schedule( 10 minutes, 30 minutes) {
     Logger("means").info("kmeans")
     kActor ! CalculateKMeans()
   }
@@ -79,7 +82,8 @@ class Test @Inject()(system: ActorSystem,
       s"programmatic-uda-${kinesisStream}-observations",
       cp,
       workerId)
-    val since = new Date(System.currentTimeMillis() - 1.days.toMillis)
+
+    val since = new Date(System.currentTimeMillis() - 2.days.toMillis)
     logger.info(s"since $since")
     kinesisClientLibConfiguration.withTimestampAtInitialPositionInStream( since )
 

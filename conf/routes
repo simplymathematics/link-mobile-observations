@@ -4,7 +4,9 @@
 
 GET     /index                      controllers.IndexController.index
 GET     /list                       controllers.IndexController.list
-GET     /list/json                       controllers.IndexController.json
+GET     /list/:id                       controllers.IndexController.filter(id: String)
+GET     /type/:id                       controllers.IndexController.filterByType(id: String)
+GET     /json                       controllers.IndexController.json
 
 # Websocket
 GET     /ws                         controllers.WebsocketController.ws

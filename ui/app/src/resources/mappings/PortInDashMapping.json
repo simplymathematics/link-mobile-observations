@@ -7,7 +7,7 @@
       "displayName": "Id",
       "path": "$.id.value",
       "searchable": true,
-      "columnWidth": 100,
+      "columnWidth": 200,
       "flexGrow": 1,
       "isKey": true
     },
@@ -15,12 +15,13 @@
       "displayName": "Type",
       "path": "$.id.type",
       "searchable": true,
-      "columnWidth": 260
+      "columnWidth": 160
     },
     {
       "displayName": "Timestamp",
       "path": "$.ts",
       "searchable": true,
+      "type": "TIMESTAMP",
       "columnWidth": 260
     },
     {

@@ -147,7 +147,7 @@
                 {
                   "Effect": "Allow",
                   "Action": "kinesis:*",
-                  "Resource": "arn:aws:kinesis:us-east-1:028957328603:*"
+                  "Resource": "arn:aws:kinesis:*"
                 },
                 {
                   "Effect": "Allow",
