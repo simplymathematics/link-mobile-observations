@@ -22,7 +22,7 @@ class KmeansActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext)
     case CalculateKMeans() =>
       cache.get[List[Observation]]("observations") map {
         case Some(obs) =>
-          val k = KMeans.process(obs)
+          val k = KMeans.process(obs.toList)
           log.info(s"k ${k}")
           cache.set("means", k)
         case None => log.warning("No observations to calculate")

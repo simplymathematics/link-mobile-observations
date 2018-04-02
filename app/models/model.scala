@@ -54,7 +54,7 @@ case class Response(observations: List[Observation], means: List[(Observation, I
 object Response {
   def empty = Response(List(), List(), 0, Map())
 
-  def build(list: List[Observation], means: List[(Observation, Int)]) = {
-    Response(list.sortWith(_.ts > _.ts ).take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
+  def build(list: Set[Observation], means: List[(Observation, Int)]) = {
+    Response(list.toList.sortWith(_.ts > _.ts ).take(100), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
   }
 }

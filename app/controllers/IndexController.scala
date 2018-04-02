@@ -30,7 +30,7 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   def data(): OptionT[Future, Result] = {
     for {
-      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      obs2 <- OptionT(cache.get[Set[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Ok(Json.toJson(Response.build(obs2, means2))))
     } yield {
@@ -46,7 +46,7 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   def list = Action.async {
     val result = for {
-      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      obs2 <- OptionT(cache.get[Set[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Response.build(obs2, means2) )
     } yield Ok(views.html.list(res))
@@ -56,7 +56,7 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   def filter(id: String) = Action.async {
     val result = for {
-      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      obs2 <- OptionT(cache.get[Set[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Response.build(obs2.filter(_.id.value.contains(id)), means2) )
     } yield Ok(views.html.list(res))
@@ -66,7 +66,7 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   def filterByType(typeId: String) = Action.async {
     val result = for {
-      obs2 <- OptionT(cache.get[List[Observation]](observations))
+      obs2 <- OptionT(cache.get[Set[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some( Response.build(obs2.filter(_.id.`type`.contains(typeId)), means2) )
     } yield Ok(views.html.list(res))

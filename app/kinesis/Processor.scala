@@ -3,14 +3,15 @@ package kinesis
 import java.nio.charset.Charset
 import java.util
 import java.util.zip.Inflater
-import javax.inject.{Inject, Named}
 
+import actors.Mediator
+import javax.inject.{Inject, Named}
 import akka.actor.ActorRef
 import com.amazonaws.services.kinesis.clientlibrary.exceptions.{InvalidStateException, ShutdownException, ThrottlingException}
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.{IRecordProcessor, IRecordProcessorCheckpointer}
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason
 import com.amazonaws.services.kinesis.model.Record
-import models.{ObservationHolder, UpdateMessage}
+import models.{Observation, ObservationHolder, UpdateMessage}
 import play.api.Logger
 
 import scala.collection.JavaConverters._
@@ -18,8 +19,8 @@ import scala.concurrent.duration._
 
 class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
-  println("initing Processor...")
   val logger = Logger(getClass)
+  logger.info("initing Processor...")
   var kinesisShardId = ""
 
   // Backoff and retry settings
@@ -27,7 +28,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
   val NUM_RETRIES = 20
 
   // Checkpoint about once a minute
-  val CHECKPOINT_INTERVAL_MILLIS = 2.minutes.toMillis
+  val CHECKPOINT_INTERVAL_MILLIS = 20.seconds.toMillis
   var nextCheckpointTimeInMillis = 0L
 
   val decoder = Charset.forName("UTF-8").newDecoder
@@ -47,17 +48,16 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
     val value = new String(finalData, "UTF-8")
     val observations: List[ObservationHolder] = models.implicits.parse(value)
-//    println(s" -> #: ${observations.size} ${proxyActor}")
-    observations.foreach { obs =>
-      proxyActor ! UpdateMessage(obs.body.observation)
-    }
+    val obs: List[Observation] = observations.map(_.body.observation)
+    logger.info(s"Obs ${obs}")
+    proxyActor ! Mediator(obs)
 
     return finalData
   }
 
 
   override def processRecords(records: util.List[Record], checkpointer: IRecordProcessorCheckpointer): Unit = {
-    logger.info("Processing " + records.size + " records from " + kinesisShardId)
+//    logger.info("Processing " + records.size + " records from " + kinesisShardId)
 
     // Process records and perform all exception handling.
     records.asScala.foreach { record =>
@@ -75,8 +75,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
   }
 
   override def initialize(shardId: String): Unit = {
-    logger.info("Initializing record processor for shard: " + shardId)
-    println("Initializing record processor for shard: " + shardId)
+//    logger.info("Initializing record processor for shard: " + shardId)
     kinesisShardId = shardId
   }
 
@@ -86,7 +85,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
 
   private def checkpoint(checkpointer: IRecordProcessorCheckpointer): Unit = {
-    logger.info("Checkpointing shard " + kinesisShardId)
+//    logger.info("Checkpointing shard " + kinesisShardId)
     var i = 0
     while (i < NUM_RETRIES) {
       try {

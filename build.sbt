@@ -18,6 +18,10 @@ scalaVersion := "2.12.2"
 
 //scalacOptions += "-Ypartial-unification"
 
+val playPac4jVersion = "4.0.0"
+val pac4jVersion = "2.1.0"
+val playVersion = "2.6.12"
+val akkaVersion = "2.5.11"
 libraryDependencies ++= Seq(
   guice,
   ws,
@@ -31,7 +35,21 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.5.11",
   "com.amazonaws" % "amazon-kinesis-client" % "1.9.0",
   "org.typelevel" %% "cats-core" % "1.0.1",
-  "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.11"
+  "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.11",
+  "org.pac4j" % "play-pac4j" % playPac4jVersion,
+  "org.pac4j" % "pac4j-oidc" % pac4jVersion exclude("commons-io" , "commons-io"),
+  "com.typesafe.play" % "play-cache_2.12" % playVersion,
+  "commons-io" % "commons-io" % "2.4",
+  "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
+  "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
+  "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+  "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
+  "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
+  "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
+  "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+  "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
+  "com.typesafe.akka" %% "akka-cluster-sharding" % akkaVersion,
+  "com.typesafe.akka" %% "akka-distributed-data" % akkaVersion
 )
 
 dockerExposedPorts := Seq(9000)
