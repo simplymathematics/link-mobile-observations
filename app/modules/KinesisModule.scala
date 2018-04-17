@@ -53,10 +53,10 @@ class Test @Inject()(system: ActorSystem,
     proxyActor ! Ping(System.currentTimeMillis())
   }
 
-  system.scheduler.schedule( 10 minutes, 30 minutes) {
-    Logger("means").info("kmeans")
-    kActor ! CalculateKMeans()
-  }
+//  system.scheduler.schedule( 10 minutes, 30 minutes) {
+//    Logger("means").info("kmeans")
+//    kActor ! CalculateKMeans()
+//  }
 
 
   import java.net.InetAddress

@@ -34,7 +34,7 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.11"
 )
 
-dockerExposedPorts := Seq(9000)
+dockerExposedPorts := Seq(9000, 2551)
 dockerRepository := Some("028957328603.dkr.ecr.us-east-1.amazonaws.com/intersection")
 
 resolvers ++= Seq(
@@ -54,6 +54,7 @@ dockerCommands := Seq(
   Cmd("ADD", "opt /opt"),
 
   Cmd("EXPOSE", "9000"),
+  Cmd("EXPOSE", "2551"),
 
   Cmd("ADD", "opt/docker/ /app/"),
   Cmd("WORKDIR", "/app"),
