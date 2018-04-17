@@ -5,13 +5,12 @@ import java.util
 import java.util.zip.Inflater
 
 import actors.Mediator
-import javax.inject.{Inject, Named}
 import akka.actor.ActorRef
 import com.amazonaws.services.kinesis.clientlibrary.exceptions.{InvalidStateException, ShutdownException, ThrottlingException}
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.{IRecordProcessor, IRecordProcessorCheckpointer}
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason
 import com.amazonaws.services.kinesis.model.Record
-import models.{Observation, ObservationHolder, UpdateMessage}
+import models.{Observation, ObservationHolder}
 import play.api.Logger
 
 import scala.collection.JavaConverters._
@@ -57,7 +56,7 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
 
 
   override def processRecords(records: util.List[Record], checkpointer: IRecordProcessorCheckpointer): Unit = {
-//    logger.info("Processing " + records.size + " records from " + kinesisShardId)
+    logger.info("Processing " + records.size + " records from " + kinesisShardId)
 
     // Process records and perform all exception handling.
     records.asScala.foreach { record =>

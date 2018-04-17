@@ -1,6 +1,6 @@
 package modules
 
-import java.util.UUID
+import java.util.{Date, UUID}
 
 import actors.{CalculateKMeans, SnapshotRequest}
 import akka.actor.{ActorRef, ActorSystem}
@@ -56,10 +56,10 @@ class Test @Inject()(system: ActorSystem,
 //    proxyActor ! SnapshotRequest(uuid)
 //  }
 
-  system.scheduler.schedule( 10 minutes, 30 minutes) {
-    Logger("means").info("kmeans")
-    kActor ! CalculateKMeans()
-  }
+//  system.scheduler.schedule( 10 minutes, 30 minutes) {
+//    Logger("means").info("kmeans")
+//    kActor ! CalculateKMeans()
+//  }
 
 
   import java.net.InetAddress
@@ -86,10 +86,11 @@ class Test @Inject()(system: ActorSystem,
       cp,
       workerId)
 
-//    val since = new Date(System.currentTimeMillis() - 2.minutes.toMillis)
-//    logger.info(s"since $since")
-//    kinesisClientLibConfiguration.withTimestampAtInitialPositionInStream( since )
-    kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.LATEST)
+    val since = new Date(System.currentTimeMillis() - 2.minutes.toMillis)
+    logger.info(s"since $since")
+    kinesisClientLibConfiguration.withTimestampAtInitialPositionInStream( since )
+
+//    kinesisClientLibConfiguration.withInitialPositionInStream(InitialPositionInStream.LATEST)
     val recordProcessorFactory = new ProcessorFactory(proxyActor)
     val worker = new Worker(recordProcessorFactory, kinesisClientLibConfiguration)
 

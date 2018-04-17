@@ -72,6 +72,7 @@ dockerCommands := Seq(
   Cmd("ADD", "opt /opt"),
 
   Cmd("EXPOSE", "9000"),
+  Cmd("EXPOSE", "2551"),
 
   Cmd("ADD", "opt/docker/ /app/"),
   Cmd("WORKDIR", "/app"),

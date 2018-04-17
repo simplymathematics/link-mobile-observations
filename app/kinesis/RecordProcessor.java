@@ -27,7 +27,7 @@ import com.amazonaws.services.kinesis.model.Record;
  */
 public class RecordProcessor implements IRecordProcessor {
 
-    private final Log LOG = LogFactory.getLog(getClass());
+    private final Log log = LogFactory.getLog(getClass());
     private String kinesisShardId;
 
     // Backoff and retry settings
@@ -45,7 +45,7 @@ public class RecordProcessor implements IRecordProcessor {
      */
     @Override
     public void initialize(String shardId) {
-        LOG.info("Initializing record processor for shard: " + shardId);
+        log.info("Initializing record processor for shard: " + shardId);
         this.kinesisShardId = shardId;
     }
 
@@ -85,7 +85,7 @@ public class RecordProcessor implements IRecordProcessor {
      */
     @Override
     public void processRecords(List<Record> records, IRecordProcessorCheckpointer checkpointer) {
-        LOG.info("Processing " + records.size() + " records from " + kinesisShardId);
+        log.info("Processing " + records.size() + " records from " + kinesisShardId);
 
         // Process records and perform all exception handling.
         processRecordsWithRetries(records);
@@ -115,19 +115,19 @@ public class RecordProcessor implements IRecordProcessor {
                     processedSuccessfully = true;
                     break;
                 } catch (Throwable t) {
-                    LOG.warn("Caught throwable while processing record " + record, t);
+                    log.warn("Caught throwable while processing record " + record, t);
                 }
 
                 // backoff if we encounter an exception.
                 try {
                     Thread.sleep(BACKOFF_TIME_IN_MILLIS);
                 } catch (InterruptedException e) {
-                    LOG.debug("Interrupted sleep", e);
+                    log.debug("Interrupted sleep", e);
                 }
             }
 
             if (!processedSuccessfully) {
-                LOG.error("Couldn't process record " + record + ". Skipping the record.");
+                log.error("Couldn't process record " + record + ". Skipping the record.");
             }
         }
     }
@@ -152,12 +152,12 @@ public class RecordProcessor implements IRecordProcessor {
 //            long recordCreateTime = new Long(data.substring("testData-".length()));
 //            long ageOfRecordInMillis = System.currentTimeMillis() - recordCreateTime;
 //
-//            LOG.info(record.getSequenceNumber() + ", " + record.getPartitionKey() + ", " + data + ", Created "
+//            log.info(record.getSequenceNumber() + ", " + record.getPartitionKey() + ", " + data + ", Created "
 //                    + ageOfRecordInMillis + " milliseconds ago.");
 //        } catch (NumberFormatException e) {
-//            LOG.info("Record does not match sample record format. Ignoring record with data; " + data);
+//            log.info("Record does not match sample record format. Ignoring record with data; " + data);
 //        } catch (CharacterCodingException e) {
-//            LOG.error("Malformed data: " + data, e);
+//            log.error("Malformed data: " + data, e);
 //        }
     }
 
@@ -166,7 +166,7 @@ public class RecordProcessor implements IRecordProcessor {
      */
     @Override
     public void shutdown(IRecordProcessorCheckpointer checkpointer, ShutdownReason reason) {
-        LOG.info("Shutting down record processor for shard: " + kinesisShardId);
+        log.info("Shutting down record processor for shard: " + kinesisShardId);
         // Important to checkpoint after reaching end of shard, so we can start processing data from child shards.
         if (reason == ShutdownReason.TERMINATE) {
             checkpoint(checkpointer);
@@ -179,33 +179,33 @@ public class RecordProcessor implements IRecordProcessor {
      * @param checkpointer
      */
     private void checkpoint(IRecordProcessorCheckpointer checkpointer) {
-        LOG.info("Checkpointing shard " + kinesisShardId);
+        log.info("Checkpointing shard " + kinesisShardId);
         for (int i = 0; i < NUM_RETRIES; i++) {
             try {
                 checkpointer.checkpoint();
                 break;
             } catch (ShutdownException se) {
                 // Ignore checkpoint if the processor instance has been shutdown (fail over).
-                LOG.info("Caught shutdown exception, skipping checkpoint.", se);
+                log.info("Caught shutdown exception, skipping checkpoint.", se);
                 break;
             } catch (ThrottlingException e) {
                 // Backoff and re-attempt checkpoint upon transient failures
                 if (i >= (NUM_RETRIES - 1)) {
-                    LOG.error("Checkpoint failed after " + (i + 1) + "attempts.", e);
+                    log.error("Checkpoint failed after " + (i + 1) + "attempts.", e);
                     break;
                 } else {
-                    LOG.info("Transient issue when checkpointing - attempt " + (i + 1) + " of "
+                    log.info("Transient issue when checkpointing - attempt " + (i + 1) + " of "
                             + NUM_RETRIES, e);
                 }
             } catch (InvalidStateException e) {
                 // This indicates an issue with the DynamoDB table (check for table, provisioned IOPS).
-                LOG.error("Cannot save checkpoint to the DynamoDB table used by the Amazon Kinesis Client Library.", e);
+                log.error("Cannot save checkpoint to the DynamoDB table used by the Amazon Kinesis Client Library.", e);
                 break;
             }
             try {
                 Thread.sleep(BACKOFF_TIME_IN_MILLIS);
             } catch (InterruptedException e) {
-                LOG.debug("Interrupted sleep", e);
+                log.debug("Interrupted sleep", e);
             }
         }
     }
