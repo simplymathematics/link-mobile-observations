@@ -37,7 +37,7 @@ class ProcessorFactory(proxyActor: ActorRef) extends IRecordProcessorFactory {
 
 class Test @Inject()(system: ActorSystem,
                      @Named("proxyActor") proxyActor: ActorRef,
-                     @Named("kActor") kActor: ActorRef,
+//                     @Named("kActor") kActor: ActorRef,
                      cache: AsyncCacheApi,
                      configuration: Configuration)(implicit ec: ExecutionContext) {
 

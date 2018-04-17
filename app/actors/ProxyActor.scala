@@ -27,12 +27,26 @@ class ProxyActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) 
             actor ! Ping(1)
           }
       }
+    case UpdateMessageList(obs) =>
+      cache.get[List[Observation]](observations).flatMap{
+        case None =>
+          log.info(s"Adding observations: ${obs.size}")
+          log.info(s"Adding observations: ${obs.take(10)}")
+          cache.set(observations, obs)
+        case Some(list)  =>
+          log.info(s"Adding observation: ${obs.size}")
+          log.info(s"Adding observations: ${obs.take(10)}")
+          cache.set(observations,  obs ::: list)
+      }
+
     case UpdateMessage(observation) =>
 
       cache.get[List[Observation]](observations).flatMap{
         case None =>
+          log.info(s"Adding observation: ${observation}")
           cache.set(observations,List[Observation](observation))
         case Some(list)  =>
+          log.info(s"Adding observation: ${observation}")
           cache.set(observations,  observation :: list)
       }
 

@@ -3,14 +3,14 @@ package kinesis
 import java.nio.charset.Charset
 import java.util
 import java.util.zip.Inflater
-import javax.inject.{Inject, Named}
 
+import javax.inject.{Inject, Named}
 import akka.actor.ActorRef
 import com.amazonaws.services.kinesis.clientlibrary.exceptions.{InvalidStateException, ShutdownException, ThrottlingException}
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.{IRecordProcessor, IRecordProcessorCheckpointer}
 import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason
 import com.amazonaws.services.kinesis.model.Record
-import models.{ObservationHolder, UpdateMessage}
+import models.{ObservationHolder, UpdateMessage, UpdateMessageList}
 import play.api.Logger
 
 import scala.collection.JavaConverters._
@@ -48,10 +48,10 @@ class Processor(proxyActor: ActorRef) extends IRecordProcessor {
     val value = new String(finalData, "UTF-8")
     val observations: List[ObservationHolder] = models.implicits.parse(value)
 //    println(s" -> #: ${observations.size} ${proxyActor}")
-    observations.foreach { obs =>
-      proxyActor ! UpdateMessage(obs.body.observation)
-    }
-
+//    observations.foreach { obs =>
+//      proxyActor ! UpdateMessage(obs.body.observation)
+//    }
+      proxyActor ! UpdateMessageList(observations.map(_.body.observation))
     return finalData
   }
 

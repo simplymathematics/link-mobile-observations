@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils
 import play.api.libs.functional.syntax.{unlift, _}
 import play.api.libs.json.{Format, JsObject, JsPath, Json}
 
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 object implicits {
 
@@ -55,6 +55,18 @@ object Response {
   def empty = Response(List(), List(), 0, Map())
 
   def build(list: List[Observation], means: List[(Observation, Int)]) = {
-    Response(list.sortWith(_.ts > _.ts ).take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
+    val l = Try{
+      list.sortWith(_.ts > _.ts ).take(1000)
+    } match {
+      case Success(list) => list
+      case Failure(_) =>
+        println(list.take(1))
+        list
+    }
+
+    println(s"list ${l}")
+    println(s"list ${means}")
+
+    Response(l, means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
   }
 }
