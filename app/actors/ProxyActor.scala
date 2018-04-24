@@ -30,12 +30,10 @@ class ProxyActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) 
     case UpdateMessageList(obs) =>
       cache.get[List[Observation]](observations).flatMap{
         case None =>
-          log.info(s"Adding observations: ${obs.size}")
-          log.info(s"Adding observations: ${obs.take(10)}")
+          log.info(s"Adding observations from scratch: ${obs.size}")
           cache.set(observations, obs)
         case Some(list)  =>
           log.info(s"Adding observation: ${obs.size}")
-          log.info(s"Adding observations: ${obs.take(10)}")
           cache.set(observations,  obs ::: list)
       }
 

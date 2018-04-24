@@ -32,11 +32,8 @@ case class Location(lon: Double, lat: Double, horizontal_accuracy: Float)
 case class ObservationWrapper(provider_id: String, observation: Observation)
 
 case class Observation(ts: Long, id: TypeId, location: Location) {
-  val sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss")
 
   def str() = s"${id.`type`}-${id.value}"
-
-  def toDate() = sdf.format(new Date(ts * 1000))
 
   def t() = id.`type`
 
@@ -46,6 +43,10 @@ case class Observation(ts: Long, id: TypeId, location: Location) {
   }
 }
 
+object Observation{
+  val sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss")
+  def toDate(observation: Observation) = sdf.format(new Date(observation.ts * 1000))
+}
 
 case class ObservationHolder(ts: Long, body: ObservationWrapper)
 
@@ -63,9 +64,6 @@ object Response {
         println(list.take(1))
         list
     }
-
-    println(s"list ${l}")
-    println(s"list ${means}")
 
     Response(l, means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
   }

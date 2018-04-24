@@ -27,12 +27,28 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   }
 
+  def cleanup() = {
+    import scala.concurrent.duration._
+    def twoDaysAgo() = System.currentTimeMillis() - 2.days.toMillis
+
+    cache.get[List[Observation]](observations).map {
+      case Some(list) =>
+        logger.info(s"cleaning up ${list.size}")
+        if( list.size > 1000) {
+          val cleanedup = list.filter(_.ts > (twoDaysAgo()))
+          logger.info(s"cleaning up ${cleanedup.size}")
+          cache.set(observations, cleanedup)
+        }
+      case None => logger.info("ole")
+    }
+
+  }
 
   def data(): OptionT[Future, Result] = {
     for {
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
-      res <- OptionT.some( Ok(Json.toJson(Response.build(obs2, means2))))
+      res <- OptionT.some(Ok(Json.toJson(Response.build(obs2, means2))))
     } yield {
       res
     }
@@ -40,16 +56,20 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
 
   def json = Action.async {
-    data().getOrElseF( Future {Ok("no data")})
+    data().getOrElseF(Future {
+      Ok("no data")
+    })
   }
 
 
   def list = Action.async {
-    val result = for {
+    val result: OptionT[Future, Result] = for {
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
-      res <- OptionT.some( Response.build(obs2, means2) )
+      res <- OptionT.some(Response.build(obs2, means2))
+      _ <- OptionT.some( Future(cleanup()))
     } yield Ok(views.html.list(res))
+
 
     result.getOrElse(Ok("No data"))
   }
@@ -58,7 +78,7 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
     val result = for {
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
-      res <- OptionT.some( Response.build(obs2.filter(_.id.value.contains(id)), means2) )
+      res <- OptionT.some(Response.build(obs2.filter(_.id.value.contains(id)), means2))
     } yield Ok(views.html.list(res))
 
     result.getOrElse(Ok("No data"))
@@ -68,13 +88,11 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
     val result = for {
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
-      res <- OptionT.some( Response.build(obs2.filter(_.id.`type`.contains(typeId)), means2) )
+      res <- OptionT.some(Response.build(obs2.filter(_.id.`type`.contains(typeId)), means2))
     } yield Ok(views.html.list(res))
 
     result.getOrElse(Ok("No data"))
   }
-
-
 
 
 }
