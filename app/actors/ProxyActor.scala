@@ -1,11 +1,11 @@
 package actors
 
 import javax.inject.Inject
-
 import akka.actor.{Actor, ActorLogging, ActorRef}
 import akka.event.LoggingReceive
 import com.google.inject.Singleton
 import models._
+import play.api.Logger
 import play.api.cache.AsyncCacheApi
 
 import scala.collection.immutable.HashSet
@@ -18,6 +18,9 @@ class ProxyActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) 
   protected[this] var watchers: Map[String, HashSet[ActorRef]] = Map[String, HashSet[ActorRef]]()
 
   val observations = "observations"
+  val logger = Logger(getClass)
+
+  def twoDaysAgo() = (System.currentTimeMillis() - 2.days.toMillis)/1000
 
   def receive = LoggingReceive {
 
@@ -28,13 +31,14 @@ class ProxyActor @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionContext) 
           }
       }
     case UpdateMessageList(obs) =>
+
       cache.get[List[Observation]](observations).flatMap{
         case None =>
           log.info(s"Adding observations from scratch: ${obs.size}")
           cache.set(observations, obs)
         case Some(list)  =>
           log.info(s"Adding observation: ${obs.size}")
-          cache.set(observations,  obs ::: list)
+          cache.set(observations,  (obs ::: list).filter(_.ts > (twoDaysAgo())))
       }
 
     case UpdateMessage(observation) =>

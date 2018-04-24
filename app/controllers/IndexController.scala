@@ -27,22 +27,6 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
 
   }
 
-  def cleanup() = {
-    import scala.concurrent.duration._
-    def twoDaysAgo() = System.currentTimeMillis() - 2.days.toMillis
-
-    cache.get[List[Observation]](observations).map {
-      case Some(list) =>
-        logger.info(s"cleaning up ${list.size}")
-        if( list.size > 1000) {
-          val cleanedup = list.filter(_.ts > (twoDaysAgo()))
-          logger.info(s"cleaning up ${cleanedup.size}")
-          cache.set(observations, cleanedup)
-        }
-      case None => logger.info("ole")
-    }
-
-  }
 
   def data(): OptionT[Future, Result] = {
     for {
@@ -67,7 +51,6 @@ class IndexController @Inject()(cache: AsyncCacheApi)(implicit ec: ExecutionCont
       obs2 <- OptionT(cache.get[List[Observation]](observations))
       means2 <- OptionT(cache.get[List[(Observation, Int)]]("means"))
       res <- OptionT.some(Response.build(obs2, means2))
-      _ <- OptionT.some( Future(cleanup()))
     } yield Ok(views.html.list(res))
 
 

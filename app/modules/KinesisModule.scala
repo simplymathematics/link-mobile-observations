@@ -71,7 +71,7 @@ class Test @Inject()(system: ActorSystem,
 
   val app_table = env match {
     case "local" => s"link-programmatic-uda-observations-${InetAddress.getLocalHost.getCanonicalHostName}"
-    case default => s"link-programmatic-uda-observations-${env}-${UUID.randomUUID}"
+    case default => s"link-programmatic-uda-observations-${env}"
   }
 
   try {

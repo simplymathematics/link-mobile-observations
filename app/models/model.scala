@@ -65,6 +65,6 @@ object Response {
         list
     }
 
-    Response(l, means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
+    Response(l.take(1000), means, list.size, list.groupBy(_.id.value).mapValues(_.size), list.groupBy(_.id.`type`).mapValues(_.size))
   }
 }
