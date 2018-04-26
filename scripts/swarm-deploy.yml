@@ -1,0 +1,34 @@
+---
+#- name: Have the necessary SSH key
+#  hosts: localhost
+#  tasks:
+#    - name: copy the ssh key
+#      copy:
+#        content: '{{ pda_manager_key }}'
+#        dest: /tmp/swarm_manager_id_rsa
+#        mode: 0600
+- name: Upload and run updated docker images in swarm stack
+  hosts: manager
+  tasks:
+    - name: Log into Docker Hub
+      docker_login:
+        username: '{{ pda_docker_user }}'
+        password: '{{ pda_docker_password }}'
+        email: '{{ pda_docker_email }}'
+    - name: copy docker-compose file to manager
+      template:
+        src: 'files/docker-compose-stack.yml.j2'
+        dest: ~/docker-compose.yml
+    - name: run docker-compose stack
+      shell: "docker stack deploy -c docker-compose.yml observations --with-registry-auth --prune"
+    - name: Log out of Docker Hub
+      docker_login:
+        state: absent
+- name: Tell Datadog about the deployment
+  hosts: localhost
+  tasks:
+    - datadog_event:
+        title: PDA deployment in {{ pda_env }}
+        text: Build {{ lookup('env', 'BUILDKITE_BUILD_NUMBER') }} ({{ pda_version_tag }})
+        api_key: '{{ pda_dd_api_key }}'
+        app_key: '{{ pda_dd_app_key }}'

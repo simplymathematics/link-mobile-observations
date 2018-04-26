@@ -18,11 +18,12 @@ source ./version.txt
 echo Version $TAG
 source ./git-version.txt
 echo Git tag
+pwd
 cat ./git-version.txt
 
 AWS_ACCOUNT_ID=028957328603
 
-eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email)
+
 
 
 ./scripts/build-sbt-reactjs
@@ -31,6 +32,9 @@ sbt "npm install"
 sbt clean stage docker:publishLocal
 
 docker tag $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$TAG $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
+
+eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email)
+
 docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
 
 #Point Beanstalk configuration file to correct image

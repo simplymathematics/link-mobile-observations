@@ -1,0 +1,49 @@
+---
+version: '3'
+networks:
+  default:
+    external:
+      name: haproxy_net
+services:
+  pda:
+    image: intersection/link-mobile-observations:{{ pda_version_tag }}
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      replicas: 2
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 30s
+      update_config:
+        parallelism: 1
+        delay: 5s
+        failure_action: rollback
+    environment:
+      - VIRTUAL_HOST=link-mobile-observations.{{ pda_domain }}
+      - SERVICE_PORTS=9000
+      - SPLUNK_HOST={{ pda_splunk_host }}
+      - SPLUNK_TOKEN={{ pda_splunk_token }}
+      - DD_API_KEY={{ pda_dd_api_key }}
+      - DD_APP_KEY={{ pda_dd_app_key }}
+      - SERVICE=link-mobile
+      - APP=observations
+      - ENV={{ pda_env }}
+      - BASIC_AUTH_PASSWORD={{ pda_auth_password }}
+      - BASIC_AUTH_USERNAME={{ pda_auth_username }}
+      - SQLALCHEMY_DATABASE_URI={{ pda_database }}
+      - SSL_REDIRECT={{ pda_ssl_redirect }}
+      - PDA_LOG_LEVEL={{ pda_log_level }}
+    labels:
+      com.intersection.app: observations
+      com.intersection.env: '{{ pda_env }}'
+      com.intersection.service: link-mobile
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/health']
+      timeout: 10s
+    logging:
+      driver: splunk
+      options:
+        splunk-url: https://{{ pda_splunk_host }}:443
+        splunk-token: "{{ pda_splunk_token }}"
+        labels: com.intersection.app,com.intersection.env,com.intersection.service

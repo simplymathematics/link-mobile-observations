@@ -12,13 +12,21 @@ steps:
     timeout_in_minutes: 5
     concurrency: 1
     concurrency_group: "link-mobile-observations"
-    artifact_paths: target/aws/link-mobile-observations.zip
+    artifact_paths: target/aws/link-mobile-observations.zip, git-version.txt
     agents:
       queue: link-scala-dev-nyc
     env:
       APPNAME: link-mobile-observations
 
   - block: dev
+
+  - label: "Deploy to Test Env"
+    command:
+      - ANSIBLE_HOST_KEY_CHECKING=False \
+        	  ansible-playbook -i ansible/inventories/dev scripts/swarm-deploy.yml
+    branches: master
+    agents:
+      - queue=link-aws-dev
 
   - label: dev deploy
     command: scripts/prep-deploy && scripts/deploy
