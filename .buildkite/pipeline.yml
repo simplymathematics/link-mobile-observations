@@ -38,7 +38,7 @@ steps:
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
       - ANSIBLE_HOST_KEY_CHECKING=False \
         	  ansible-playbook --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
-    branches: master
+#    branches: master
     agents:
       - queue=link-aws-dev
     env:
