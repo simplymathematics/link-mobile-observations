@@ -36,6 +36,7 @@ steps:
     concurrency_group: "link-mobile-observations"
     command:
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
+      - /usr/local/bin/ansible-galaxy install -f
       - ANSIBLE_HOST_KEY_CHECKING=False \
         	  /usr/local/bin/ansible-playbook --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
 #    branches: master
