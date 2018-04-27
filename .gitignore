@@ -11,3 +11,4 @@ ui/node_modules
 npm-debug.log
 ansible/roles
 vault_pass
+git-version.txt
