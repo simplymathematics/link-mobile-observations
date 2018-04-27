@@ -1,1 +1,4 @@
 ---
+docker_email: '{{ secret_docker_email }}'
+docker_password: '{{ secret_docker_password }}'
+docker_user: '{{ secret_docker_user }}'

@@ -1,1 +1,4 @@
 ---
+---
+dd_apikey: "{{ dd_apikey_encrypted }}"
+dd_appkey: "{{ dd_appkey_encrypted }}"

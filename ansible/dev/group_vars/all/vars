@@ -1,3 +1,7 @@
+---
+dd_apikey: "{{ dd_apikey_encrypted }}"
+dd_appkey: "{{ dd_appkey_encrypted }}"
+
 env: dev
 region: us-east-1
 key_name: link-non-prod-feb-2018

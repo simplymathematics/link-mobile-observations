@@ -3,3 +3,4 @@
   hosts: localhost
   vars_files:
     - "group_vars/{{ appname }}/vars"
+    - "group_vars/{{ appname }}/vault"

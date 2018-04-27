@@ -3,5 +3,6 @@
   hosts: localhost
   vars_files:
     - "group_vars/{{ appname }}/vars"
-  roles:
-    - eb-deployments
+    - "group_vars/{{ appname }}/vault"
+#  roles:
+#    - eb-deployments
