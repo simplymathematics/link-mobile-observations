@@ -1,0 +1,9 @@
+version: '2'
+services:
+  observations:
+    image: 028957328603.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:fa43bf4e2420a56f780ed6611332c3c14795e3b8
+#    volumes:
+#      - .:/home/pda-server
+    ports:
+      - "9000"
+
