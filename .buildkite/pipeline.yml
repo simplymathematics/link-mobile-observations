@@ -30,7 +30,10 @@ steps:
 
   - block: dev
 
-  - label: "Deploy to Test Env"
+  - label: dev ds deploy
+    timeout_in_minutes: 5
+    concurrency: 1
+    concurrency_group: "link-mobile-observations"
     command:
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
       - ANSIBLE_HOST_KEY_CHECKING=False \
@@ -38,6 +41,10 @@ steps:
     branches: master
     agents:
       - queue=link-aws-dev
+    env:
+          APPNAME: link-mobile-observations
+
+  - block: dev2
 
   - label: dev deploy
     command: scripts/prep-deploy && scripts/deploy
