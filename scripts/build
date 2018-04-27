@@ -2,16 +2,18 @@
 
 set -e
 
+
+pwd
+./scripts/write-git-version
+pwd
+cat ./git-version.txt
+
+
 ./scripts/build-sbt-reactjs
 
 echo "Tools built"
 echo "************************************************************"
 echo "************************************************************"
 echo "************************************************************"
-pwd
-
-./scripts/write-git-version
-pwd
-cat ./git-version.txt
 sbt "npm install"
 sbt clean compile

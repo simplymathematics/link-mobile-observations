@@ -1,9 +1,19 @@
 steps:
+  - label: gittag
+    command: scripts/write-git-version
+    timeout_in_minutes: 1
+    concurrency: 1
+    concurrency_group: "link-mobile-observations"
+    artifact_paths: git-version.txt
+    agents:
+      queue: link-scala-dev-nyc
+
   - label: build
     command: scripts/build
     timeout_in_minutes: 15
     concurrency: 1
     concurrency_group: "link-mobile-observations"
+    artifact_paths: git-version.txt
     agents:
       queue: link-scala-dev-nyc
 
