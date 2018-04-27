@@ -31,7 +31,7 @@ phoenix_mode: off
 asg_min_size: 1
 asg_max_size: 1
 
-pda_version_tag: lookup('env','version_tag')
+version_tag: lookup('env','version_tag')
 
 docker_email: '{{ secret_docker_email }}'
 docker_password: '{{ secret_docker_password }}'
