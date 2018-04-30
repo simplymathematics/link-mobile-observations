@@ -22,7 +22,7 @@ pwd
 cat ./git-version.txt
 
 echo "clean old link images '| xargs docker rmi'"
-docker images -a | grep link  | awk '{print $1}' | xargs docker rmi
+docker images -a | grep link  | awk '{print $1}'
 
 ./scripts/build-sbt-reactjs
 

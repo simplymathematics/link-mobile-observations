@@ -23,7 +23,7 @@ services:
       - VIRTUAL_HOST=link-mobile-observations.{{ env }}
       - SERVICE_PORTS=9000
       - DD_API_KEY={{ dd_api_key }}
-      - DD_APP_KEY={{ pda_dd_app_key }}
+      - DD_APP_KEY={{ dd_app_key }}
       - SERVICE=link-mobile
       - APP=observations
       - ENV={{ env }}

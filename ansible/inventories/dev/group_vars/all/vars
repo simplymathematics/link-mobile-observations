@@ -36,3 +36,7 @@ version_tag: lookup('env','version_tag')
 docker_email: '{{ secret_docker_email }}'
 docker_password: '{{ secret_docker_password }}'
 docker_user: '{{ secret_docker_user }}'
+
+dd_api_key: "{{ dd_apikey_encrypted }}"
+dd_app_key: "{{ dd_appkey_encrypted }}"
+
