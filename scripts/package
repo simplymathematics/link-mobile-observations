@@ -21,8 +21,8 @@ echo Git tag
 pwd
 cat ./git-version.txt
 
-echo "clean old link images"
-docker ps -a | grep link  | awk '{print $1}'
+echo "clean old link images '| xargs docker rmi'"
+docker ps -a | grep link  | awk '{print $1}' | xargs docker rmi
 
 ./scripts/build-sbt-reactjs
 
@@ -43,7 +43,7 @@ echo "Docker local re tagged with git tag"
 docker images
 
 AWS_ACCOUNT_ID=028957328603
-eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1)
+eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email)
 
 echo docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
 
