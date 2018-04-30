@@ -26,8 +26,16 @@ cat ./git-version.txt
 
 sbt "npm install" > /dev/null
 sbt clean stage docker:publishLocal
+echo "Docker local image created"
 
+docker images
+
+AWS_ACCOUNT_ID=028957328603
 docker tag $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$TAG $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
+
+echo "Docker local re tagged with git tag"
+
+docker images
 
 AWS_ACCOUNT_ID=028957328603
 echo aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email
