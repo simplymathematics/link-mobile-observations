@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+echo set -e
 
 CWD=$(pwd)
 APPNAME=${APPNAME:-link-mobile-observations}
@@ -22,7 +22,7 @@ pwd
 cat ./git-version.txt
 
 echo "clean old link images '| xargs docker rmi'"
-docker ps -a | grep link  | awk '{print $1}'
+docker images -a | grep link  | awk '{print $1}' | xargs docker rmi
 
 ./scripts/build-sbt-reactjs
 
