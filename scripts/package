@@ -22,7 +22,7 @@ pwd
 cat ./git-version.txt
 
 echo "clean old link images"
-docker ps -a | grep link | awk '{print $1}' | xargs docker rm
+docker ps -a | grep link  | awk '{print $1}'
 
 ./scripts/build-sbt-reactjs
 
@@ -45,7 +45,7 @@ docker images
 AWS_ACCOUNT_ID=028957328603
 eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1)
 
-docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
+echo docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
 
 #Point Beanstalk configuration file to correct image
 sed -i='' "s/<AWS_ACCOUNT_ID>/$AWS_ACCOUNT_ID/" config/Dockerrun.aws.json
