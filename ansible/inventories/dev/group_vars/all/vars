@@ -1,35 +1,5 @@
 env: dev
 region: us-east-1
-key_name: link-non-prod-feb-2018
-instance_type: t2.small
-cert: arn:aws:acm:us-east-1:028957328603:certificate/879b03f9-a895-4ec0-a8c3-b23ecaf5125e
-vpc:
-  stack_outputs:
-    BastionSecurityGroup: sg-c2176cbf
-    VpcAlarmTopicArn: arn:aws:sns:us-east-1:028957328603:dev-Sns-Vpc-01
-    VpcId: vpc-b54684d3
-    az0: us-east-1b
-    az1: us-east-1c
-    az2: us-east-1d
-    bastionIp: 34.193.250.152
-    cidrPrivate0: 172.29.0.0/19
-    cidrPrivate1: 172.29.32.0/19
-    cidrPrivate2: 172.29.64.0/19
-    cidrPublic0: 172.29.240.0/22
-    cidrPublic1: 172.29.244.0/22
-    cidrPublic2: 172.29.248.0/22
-    subnetPrivate0: subnet-2a21ac07
-    subnetPrivate1: subnet-8dec90c4
-    subnetPrivate2: subnet-420f8919
-    subnetPublic0: subnet-2521ac08
-    subnetPublic1: subnet-8cec90c5
-    subnetPublic2: subnet-4d0f8916
-subnets: "{{ vpc.stack_outputs.subnetPrivate0 }},{{ vpc.stack_outputs.subnetPrivate1 }}"
-elb_subnets: "{{ vpc.stack_outputs.subnetPublic0 }},{{ vpc.stack_outputs.subnetPublic1 }}"
-phoenix_mode: off
-
-asg_min_size: 1
-asg_max_size: 1
 
 version_tag: lookup('env','GITTAG')
 
@@ -43,3 +13,4 @@ dd_app_key: "{{ dd_appkey_encrypted }}"
 splunk_host: "{{ secret_splunk_host }}"
 splunk_token: "{{ secret_splunk_token }}"
 
+manager_key: "{{ secret_manager_key }}"

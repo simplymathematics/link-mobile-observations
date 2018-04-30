@@ -36,7 +36,7 @@ steps:
       - ls -la ./scripts
       - echo "------"
       - ls -la ./scripts/files
-      - /usr/local/bin/ansible-playbook --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
+      - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
 #    branches: master
     agents:
       - queue=link-aws-dev

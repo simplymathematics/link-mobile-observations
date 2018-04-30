@@ -1,12 +1,12 @@
 ---
-#- name: Have the necessary SSH key
-#  hosts: localhost
-#  tasks:
-#    - name: copy the ssh key
-#      copy:
-#        content: '{{ pda_manager_key }}'
-#        dest: /tmp/swarm_manager_id_rsa
-#        mode: 0600
+- name: Have the necessary SSH key
+  hosts: localhost
+  tasks:
+    - name: copy the ssh key
+      copy:
+        content: '{{ manager_key }}'
+        dest: /tmp/swarm_manager_id_rsa
+        mode: 0600
 - name: Upload and run updated docker images in swarm stack
   hosts: manager
 #  hosts: localhost
