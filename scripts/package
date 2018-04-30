@@ -22,12 +22,14 @@ pwd
 cat ./git-version.txt
 
 echo "clean old link images '| xargs docker rmi'"
-docker images -a | grep link
+docker images -a | grep link | awk '{print $3}' | xargs docker rmi
+docker images -a | grep link | awk '{print $3}'
 
 ./scripts/build-sbt-reactjs
 
 sbt "npm install" > /dev/null
 sbt clean stage docker:publishLocal
+
 echo "Docker local image created"
 
 docker images

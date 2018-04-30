@@ -5,12 +5,12 @@ networks:
     external:
       name: haproxy_net
 services:
-  pda:
+  observations:
     image: intersection/link-mobile-observations:{{ version_tag }}
     deploy:
       placement:
         constraints: [node.role == worker]
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: any
         delay: 5s

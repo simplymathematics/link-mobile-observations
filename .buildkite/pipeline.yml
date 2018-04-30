@@ -23,6 +23,11 @@ steps:
     concurrency_group: "link-mobile-observations"
     command:
       - ls -la /usr/local/bin/
+      - echo "------"
+      - buildkite-agent artifact download git-version.txt .
+      - source ./git-version.txt
+      - echo GIT $GITTAG
+      - ls -la
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
       - /usr/local/bin/ansible-playbook --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
 #    branches: master

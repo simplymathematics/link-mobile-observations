@@ -20,6 +20,8 @@
       template:
         src: 'files/docker-compose-stack.yml.j2'
         dest: ~/docker-compose.yml
+    - name: show docker compose
+      shell: "cat docker-compose.yml"
     - name: run docker-compose stack
       shell: "docker stack deploy -c docker-compose.yml observations --with-registry-auth --prune"
     - name: Log out of Docker Hub
