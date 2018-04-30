@@ -25,6 +25,7 @@ steps:
       - ls -la /usr/local/bin/
       - echo "------"
       - scripts/write-git-version
+      - cat ./git-version.txt
       - source ./git-version.txt
       - echo GIT $GITTAG
       - ls -la
