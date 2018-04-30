@@ -39,7 +39,9 @@ docker images
 
 AWS_ACCOUNT_ID=028957328603
 echo aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email
-eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email)
+echo eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1 --no-include-email)
+
+eval $(aws ecr get-login --registry-ids $AWS_ACCOUNT_ID --region us-east-1)
 
 docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:$GITTAG
 
