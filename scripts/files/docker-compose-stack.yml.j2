@@ -37,6 +37,6 @@ services:
     logging:
       driver: splunk
       options:
-        splunk-url: https://{{ pda_splunk_host }}:443
-        splunk-token: "{{ pda_splunk_token }}"
+        splunk-url: https://{{ splunk_host }}:443
+        splunk-token: "{{ splunk_token }}"
         labels: com.intersection.app,com.intersection.env,com.intersection.service

@@ -17,19 +17,6 @@ steps:
     agents:
       queue: link-scala-dev-nyc
 
-  - label: package
-    command: scripts/package
-    timeout_in_minutes: 5
-    concurrency: 1
-    concurrency_group: "link-mobile-observations"
-    artifact_paths: target/aws/link-mobile-observations.zip
-    agents:
-      queue: link-scala-dev-nyc
-    env:
-      APPNAME: link-mobile-observations
-
-  - block: dev
-
   - label: dev ds deploy
     timeout_in_minutes: 5
     concurrency: 1
@@ -42,9 +29,21 @@ steps:
     agents:
       - queue=link-aws-dev
     env:
-          APPNAME: link-mobile-observations
+      APPNAME: link-mobile-observations
 
-  - block: dev2
+
+  - label: package
+    command: scripts/package
+    timeout_in_minutes: 5
+    concurrency: 1
+    concurrency_group: "link-mobile-observations"
+    artifact_paths: target/aws/link-mobile-observations.zip
+    agents:
+      queue: link-scala-dev-nyc
+    env:
+      APPNAME: link-mobile-observations
+
+  - block: dev
 
   - label: dev deploy
     command: scripts/prep-deploy && scripts/deploy

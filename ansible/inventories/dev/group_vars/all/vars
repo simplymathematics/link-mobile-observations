@@ -40,3 +40,6 @@ docker_user: '{{ secret_docker_user }}'
 dd_api_key: "{{ dd_apikey_encrypted }}"
 dd_app_key: "{{ dd_appkey_encrypted }}"
 
+splunk_host: "{{ secret_splunk_host }}"
+splunk_token: "{{ secret_splunk_token }}"
+
