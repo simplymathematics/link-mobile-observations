@@ -24,7 +24,7 @@ steps:
     command:
       - ls -la /usr/local/bin/
       - echo "------"
-      - buildkite-agent artifact download git-version.txt .
+      - scripts/write-git-version
       - source ./git-version.txt
       - echo GIT $GITTAG
       - ls -la
