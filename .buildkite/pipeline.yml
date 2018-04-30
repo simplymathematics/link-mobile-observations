@@ -24,13 +24,14 @@ steps:
     command:
       - ls -la /usr/local/bin/
       - echo "------"
+      - ls -la
       - scripts/write-git-version
-      - source ./git-version.txt
-      - echo GIT $GITTAG
       - echo "------"
       - ls -la
       - echo "------"
       - cat ./git-version.txt
+      - source ./git-version.txt
+      - echo GIT tag $GITTAG
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
       - /usr/local/bin/ansible-playbook --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
 #    branches: master
