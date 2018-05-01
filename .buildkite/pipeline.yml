@@ -34,9 +34,10 @@ steps:
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
       - echo "------"
       - ls -la ./scripts
+      - ls -la ./ansible
       - echo "------"
-      - ls -la ./scripts/files
-      - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev scripts/swarm-deploy.yml
+      - ls -la ./ansible/files
+      - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-deploy.yml
 #    branches: master
     agents:
       - queue=link-aws-dev
