@@ -1,0 +1,18 @@
+{
+  "joyride-replay-button": {
+    "data": {
+      "id": "GEN-REPLAY",
+      "title": "Redisplay Guide",
+      "text": "Click here any time to be shown the guide again.",
+      "selector": "#joyride-replay-button",
+      "position": "bottom",
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  }
+}

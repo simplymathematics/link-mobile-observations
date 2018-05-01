@@ -1,0 +1,33 @@
+{
+  "href":"https://services.odyssys.net/subscriber/subscribers/3e82ae4e-799f-11e6-8b77-86f30ca893d3",
+  "id":"3e82ae4e-799f-11e6-8b77-86f30ca893d3",
+  "created":"2016-05-06T16:23:47.015Z",
+  "createdUser":"https://services.odyssys.net/account/users/20000",
+  "modified":"2016-05-06T16:23:47.015Z",
+  "modifiedUser":"https://services.odyssys.net/account/users/20000",
+  "ownerAccount":"https://services.odyssys.net/account/accounts/2901",
+  "enabled":true,
+  "radiusUsername":"john.doe@example.test",
+  "groups":[
+    "https://services.odyssys.net/subscriber/subscriber-groups/6024fd86-799f-11e6-8b77-86f30ca893d3"
+  ],
+  "devices":[
+    {
+      "mac":"67-11-F0-29-1A-4B",
+      "authProvider":"one-time-sign-up",
+      "portal":"https://services.odyssys.net/captive-portal/captive-portals/67007"
+    },
+    {
+      "mac":"C0-48-23-79-50-48"
+    },
+    {
+      "mac":"07-77-1B-D3-41-7F"
+    }
+  ],
+  "metadata":{
+    "First Name":"John",
+    "Last Name":"Doe",
+    "Gender":"Male",
+    "DOB":"1/1/1985"
+  }
+}

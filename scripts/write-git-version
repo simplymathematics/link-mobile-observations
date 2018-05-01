@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+echo GITTAG=`git log --format="%H" -n 1` > git-version.txt

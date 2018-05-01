@@ -1,0 +1,188 @@
+{
+  "Description": "This is the Link Mobile Observations services. Has a DynamoDB.",
+  "Parameters": {
+    "EnvironmentName": {
+      "ConstraintDescription": "Must be a string",
+      "Description": "Name of this environment, to be appended to names of things (e.g. dev, qa, prod)",
+      "Type": "String"
+    },
+    "LinkConfigsReadCapacityUnits": {
+      "ConstraintDescription": "Must be a number greater than 0",
+      "Description": "Read capacity units for the LinkConfigs table",
+      "Type": "Number",
+      "MinValue": 1,
+      "Default": "100"
+    },
+    "LinkConfigsWriteCapacityUnits": {
+      "ConstraintDescription": "Must be a number greater than 0",
+      "Description": "Write capacity units for the LinkConfigs table",
+      "Type": "Number",
+      "MinValue": 1,
+      "Default": "10"
+    }
+  },
+  "Outputs": {
+    "LinkMobileAppKinesisTable": {
+      "Description": "Table name of Kinesis checkpoints",
+      "Value": {"Ref": "LinkMobileAppKinesisTable"}
+    },
+    "InstanceProfile": {
+      "Description": "Windlass instance profile for S3 access",
+      "Value": { "Ref": "InstanceProfile" }
+    },
+    "ServiceRole": {
+      "Description": "EB Service role for link-mobile-observations",
+      "Value": { "Ref": "ServiceRole" }
+    }
+  },
+  "Resources": {
+    "LinkMobileAppKinesisTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": { "Fn::Join": [ "-", [ "link-programmatic-uda-observations", {"Ref": "EnvironmentName"}]] },
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "leaseKey",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "leaseKey",
+            "KeyType": "HASH"
+          }
+        ],
+        "GlobalSecondaryIndexes": [],
+        "LocalSecondaryIndexes": [],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": {"Ref": "LinkConfigsReadCapacityUnits"},
+          "WriteCapacityUnits": {"Ref": "LinkConfigsWriteCapacityUnits"}
+        },
+        "StreamSpecification": {
+          "StreamViewType": "NEW_IMAGE"
+        }
+      }
+    },
+    "ServiceRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "elasticbeanstalk.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "StringEquals": {
+                  "sts:ExternalId": "elasticbeanstalk"
+                }
+              }
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService",
+          "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth"
+        ]
+      }
+    },
+    "Role": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Effect": "Allow",
+                "Action": [
+                  "ecr:GetAuthorizationToken",
+                  "ecr:BatchCheckLayerAvailability",
+                  "ecr:GetDownloadUrlForLayer",
+                  "ecr:GetRepositoryPolicy",
+                  "ecr:DescribeRepositories",
+                  "ecr:ListImages",
+                  "ecr:DescribeImages",
+                  "ecr:BatchGetImage",
+                  "ecs:*"
+                ],
+                "Resource": "*"
+              }]
+            }
+          },
+          {
+            "PolicyName": "LinkMobileAppUsersTableAccess",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudwatch:*"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "kinesis:*",
+                  "Resource": "arn:aws:kinesis:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:*"
+                  ],
+                  "Resource": [
+                    {"Fn::Join": [ "", [ "arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/", { "Fn::Join": [ "-", [ "link-programmatic-uda-observations", {"Ref": "EnvironmentName"}]] }]]}
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:*"
+                  ],
+                  "Resource": [
+                    {"Fn::Join": [ "", [ "arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/", { "Fn::Join": [ "-", [ "link-programmatic-uda-observations", {"Ref": "EnvironmentName"}]]}, "/index/*"]]}
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "InstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "Role"
+          }
+        ]
+      }
+    }
+  }
+}

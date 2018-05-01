@@ -1,0 +1,80 @@
+{
+  "title": "Port In Errors",
+  "name": "PortInErrorMapping",
+  "filterTypes": ["outstanding"],
+  "mappings": [
+    {
+      "displayName": "Port Date",
+      "path": "$.entityId.portDate",
+      "type" : "DATE",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "PAC",
+      "path": "$.entityId.pac",
+      "searchable": true,
+      "columnWidth": 100
+    },
+    {
+      "displayName": "Porting MSISDN",
+      "path": "$.entityId.portingMsisdn",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "Sky Allocated MSISDN",
+      "path": "$.skyMsisdn",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "Service ID",
+      "path": "$.serviceId",
+      "searchable": true,
+      "columnWidth": 80
+    },
+    {
+      "displayName": "Operator ID",
+      "path": "$.operatorId",
+      "searchable": true,
+      "columnWidth": 80
+    },
+    {
+      "displayName": "DSP",
+      "path": "$.portInSecuredDetails.dspSyniverseCode",
+      "searchable": true,
+      "columnWidth": 40
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.portInSecuredDetails.dnoSyniverseCode",
+      "searchable": true,
+      "columnWidth": 40
+    },
+    {
+      "displayName": "Failure Code",
+      "path": "$.failures.failureCode",
+      "searchable": true,
+      "columnWidth": 240,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Failure Description",
+      "path": "$.failures.failureDescription",
+      "columnWidth": 260,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Time of Failure",
+      "path": "$.failures.failedAt",
+      "searchable": true,
+      "columnWidth": 300
+    },
+    {
+      "displayName": "Retry Button",
+      "path": "",
+      "columnWidth": 120
+    }
+  ]
+}

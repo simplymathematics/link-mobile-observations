@@ -1,0 +1,20 @@
+{
+  "port-in-expected-table-export-button": {
+    "data": {
+      "id": "PIE-001",
+      "title": "Export to CSV",
+      "text": "This button can be used to download a CSV file containing all Port In Orders on this page.<br/><br/>The CSV will include Port Date, Porting MSISDN, Sky MSISDN, DNO (provided by Syniverse) and Status as fields.<br/><br/>Please note, the download takes into account any filters and searches you have active on the table, i.e. if 'Completed' orders are set to be hidden on the page, they will not be included in the download.",
+      "selector": "#export-button",
+      "position": "left",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "width": "42rem",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  }
+}

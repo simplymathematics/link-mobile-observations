@@ -1,0 +1,34 @@
+{
+  "title": "File Records",
+  "name": "WrittenFileRecordMapping",
+  "filterTypes": [],
+  "mappings": [
+    {
+      "displayName": "MSISDN",
+      "path": "$.msisdn",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.dno",
+      "searchable": true,
+      "columnWidth": 40,
+      "flexGrow": 2
+    },
+    {
+      "displayName": "RNO",
+      "path": "$.rno",
+      "searchable": true,
+      "columnWidth": 40,
+      "flexGrow": 2
+    },
+    {
+      "displayName": "ONO",
+      "path": "$.ono",
+      "searchable": true,
+      "columnWidth": 40,
+      "flexGrow": 2
+    }
+  ]
+}

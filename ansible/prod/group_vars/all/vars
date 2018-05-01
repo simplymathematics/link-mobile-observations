@@ -1,0 +1,31 @@
+env: prod
+region: us-east-1
+key_name: link-prod-feb-2018
+phoenix_mode: on
+instance_type: t2.small
+cert: arn:aws:acm:us-east-1:516822316844:certificate/4c98122e-1d8c-4f5f-a024-b1a3f90fcfbd
+vpc:
+  stack_outputs:
+    BastionSecurityGroup: sg-8afedcf7
+    VpcAlarmTopicArn: arn:aws:sns:us-east-1:516822316844:prod-Sns-Vpc-01
+    VpcId: vpc-08aa776e
+    az0: us-east-1a
+    az1: us-east-1c
+    az2: us-east-1d
+    bastionIp: 34.193.119.132
+    cidrPrivate0: 172.30.0.0/19
+    cidrPrivate1: 172.30.32.0/19
+    cidrPrivate2: 172.30.64.0/19
+    cidrPublic0: 172.30.240.0/22
+    cidrPublic1: 172.30.244.0/22
+    cidrPublic2: 172.30.248.0/22
+    subnetPrivate0: subnet-1ef46045
+    subnetPrivate1: subnet-9b23b0b6
+    subnetPrivate2: subnet-e0d496a9
+    subnetPublic0: subnet-1df46046
+    subnetPublic1: subnet-9823b0b5
+    subnetPublic2: subnet-e3d496aa
+subnets: "{{ vpc.stack_outputs.subnetPrivate0 }},{{ vpc.stack_outputs.subnetPrivate1 }},{{ vpc.stack_outputs.subnetPrivate2 }}"
+elb_subnets: "{{ vpc.stack_outputs.subnetPublic0 }},{{ vpc.stack_outputs.subnetPublic1 }},{{ vpc.stack_outputs.subnetPublic2 }}"
+asg_min_size: 1
+asg_max_size: 1

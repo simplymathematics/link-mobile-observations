@@ -1,0 +1,29 @@
+@import "materialize-css/sass/materialize";
+@import "fixed-data-table-2/dist/fixed-data-table";
+@import "react-joyride/lib/react-joyride";
+@import "variables";
+@import "header";
+@import "login";
+@import "content";
+
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+#body-index {
+  background-color: #fafafa;    //was #eeeeee
+}
+
+.btn:hover, .btn-flat:hover, .btn-large:hover, .btn-floating:hover, .btn:focus, .btn-flat:focus, .btn-large:focus, .btn-floating:focus {
+  color: #ffffff;
+  background-color: $paddington-blue-light;
+}
+
+.hidden {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+

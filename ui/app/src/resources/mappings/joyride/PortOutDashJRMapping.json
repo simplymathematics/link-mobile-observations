@@ -1,0 +1,70 @@
+{
+  "port-out-dash-secured-circle": {
+    "data": {
+      "id": "POD-001",
+      "title": "Secured Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have been confirmed by Syniverse to port out today. Any MSISDNs not in the Secured state should be investigated as it could mean that a MSISDN is no longer due to port out today as expected.",
+      "selector": "#port-out-dash-secured-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "port-out-dash-switch-updated-circle": {
+    "data": {
+      "id": "POD-002",
+      "title": "Updated Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have been updated on the switch. Any MSISDNs not in the Updated state should be investigated as the necessary update may not have been successfully made to the switch.",
+      "selector": "#port-out-dash-switch-updated-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "port-out-dash-file-processed-circle": {
+    "data": {
+      "id": "POD-003",
+      "title": "File Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have completed all file based activities (generated and/or received). Please note that this information pertains to files being prepared for sending as opposed to being actually sent.",
+      "selector": "#port-out-dash-file-processed-circle",
+      "position": "left",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "port-out-dash-completed-circle": {
+    "data": {
+      "id": "POD-004",
+      "title": "Completed Summary Wheel",
+      "text": "The summary wheel indicates that all activities have been completed for the Port Out order. The Customer will no longer have an active service on the network.",
+      "selector": "#port-out-dash-completed-circle",
+      "position": "left",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+
+@( response: Response)
+
+@import models.Observation
+@import models.Response
+
+<!DOCTYPE html>
+<html lang="en" class="index-page">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="60" >
+        <title>Paddington</title>
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="icon" href="/images/Paddington_Icon.png"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+    <body id="body-index">
+
+
+        <table class="table--statement flush--bottom">
+            <tr>
+                <td> <a href="/list"> Home </a> </td>
+            </tr>
+            @for(p <- response.means) {
+                    <tr>
+                        <td>Kmeans </td>
+                        <td>@p._1.location.lat , @p._1.location.lon #@p._2</td>
+
+                    </tr>
+                }
+
+        </table>
+        <table class="table--statement flush--bottom">
+
+            @for(p <- response.idAds) {
+                    <tr>
+                        <td>ids </td>
+                        <td>
+                            <a href="/list/@p._1">@p._1 ->  @p._2 </a>
+                        </td>
+
+                    </tr>
+                }
+
+
+        </table>
+        <table class="table--statement flush--bottom">
+
+            @for(p <- response.idAdType) {
+                <tr>
+                    <td> idType </td>
+                    <td>
+                        <a href="/type/@p._1">@p._1 ->  @p._2 </a>
+                    </td>
+                </tr>
+            }
+
+
+        </table>
+        <table class="table--statement flush--bottom">
+            <thead>
+                <tr>
+                    <th> ID  </th>
+                    <th> ID type </th>
+                    <th >TS</th>
+                    <th >long</th>
+                    <th >lat</th>
+                    <th >...</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for(p <- response.observations) {
+                    <tr>
+                        <td>@p.id.value</td>
+                        <td>@p.t</td>
+                        <td>@Observation.toDate(p)</td>
+                        <td>@p.location.lon</td>
+                        <td>@p.location.lat</td>
+                        <td></td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+
+
+    </body>
+</html>

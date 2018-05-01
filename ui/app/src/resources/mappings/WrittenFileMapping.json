@@ -1,0 +1,43 @@
+{
+  "title": "Generated Files",
+  "name": "WrittenFileMapping",
+  "filterTypes": [],
+  "mappings": [
+    {
+      "displayName": "Filename",
+      "path": "$.entityId.absoluteFilePath",
+      "searchable": true,
+      "columnWidth": 300,
+      "flexGrow": 2,
+      "isKey": true
+    },
+    {
+      "displayName": "File Type",
+      "path": "$.fileType",
+      "searchable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Date Generated",
+      "path": "$.writtenAt",
+      "type" : "DATE",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "No. of Records",
+      "path": "$.records.length",
+      "columnWidth": 120
+    },
+    {
+      "displayName": "No. of Pending Records",
+      "path": "$.pendingRecordsCount",
+      "columnWidth": 120
+    },
+    {
+      "displayName": "View Records",
+      "path": "",
+      "columnWidth": 140
+    }
+  ]
+}

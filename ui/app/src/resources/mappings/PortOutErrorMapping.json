@@ -1,0 +1,62 @@
+{
+  "title": "Port Out Errors",
+  "name": "PortOutErrorMapping",
+  "filterTypes": ["outstanding"],
+  "mappings": [
+    {
+      "displayName": "Port Date",
+      "path": "$.entityId.portDate",
+      "type" : "DATE",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "Porting MSISDN",
+      "path": "$.entityId.portingMsisdn",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.portOutSecuredDetails.dnoSyniverseCode",
+      "searchable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "ONO",
+      "path": "$.noDetails.ono",
+      "searchable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "RNO",
+      "path": "$.portOutSecuredDetails.rnoSyniverseCode",
+      "searchable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Failure Code",
+      "path": "$.failure.failureCode",
+      "searchable": true,
+      "columnWidth": 240,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Failure Description",
+      "path": "$.failure.failureDescription",
+      "columnWidth": 260,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Time of Failure",
+      "path": "$.failure.failedAt",
+      "searchable": true,
+      "columnWidth": 300
+    },
+    {
+      "displayName": "Retry Button",
+      "path": "",
+      "columnWidth": 120
+    }
+  ]
+}

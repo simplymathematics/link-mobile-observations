@@ -1,0 +1,95 @@
+{
+  "port-in-dash-accepted-circle": {
+    "data": {
+      "id": "PID-001",
+      "title": "Accepted Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have been scheduled by Syniverse to port today. Any MSISDNs not in the Accepted state should be investigated as it means Sky were not originally expecting these MSISDNs to port today.<br/><br/>You can hover the cursor over a segment of the wheel in order to see the exact number of orders that are 'Done' or 'Not Done'.",
+      "selector": "#port-in-dash-accepted-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    },
+    "counts":{
+      "notDone": 5,
+      "done": 10
+    }
+  },
+  "port-in-dash-secured-circle": {
+    "data": {
+      "id": "PID-002",
+      "title": "Secured Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have been confirmed by Syniverse to port today. Any MSISDNs not in the Secured state should be investigated as it could mean that a MSISDN is no longer due to port today as expected.<br/><br/>If there have been no orders so far today, 'No Data' will be displayed instead of a percentage.",
+      "selector": "#port-in-dash-secured-circle",
+      "position": "right",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    },
+    "counts": {
+      "notDone": 0,
+      "done": 0
+    }
+  },
+  "port-in-dash-activated-circle": {
+    "data": {
+      "id": "PID-003",
+      "title": "Activated Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have been updated on the switch. Any MSISDNs not in the Activated state should be investigated as the necessary update may not have been successfully made to the switch.",
+      "selector": "#port-in-dash-activated-circle",
+      "position": "top",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "port-in-dash-file-processed-circle": {
+    "data": {
+      "id": "PID-004",
+      "title": "File Summary Wheel",
+      "text": "The summary wheel indicates the number of porting MSISDNs that Sky know to have completed all file based activities (generated and/or received). Please note that this information pertains to files being prepared for sending as opposed to being actually sent.",
+      "selector": "#port-in-dash-file-processed-circle",
+      "position": "left",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  },
+  "port-in-dash-completed-circle": {
+    "data": {
+      "id": "PID-005",
+      "title": "Completed Summary Wheel",
+      "text": "The summary wheel indicates that all activities have been completed for the Port In order. The customer should now have a fully functioning service!",
+      "selector": "#port-in-dash-completed-circle",
+      "position": "left",
+      "allowClicksThruHole": true,
+      "style": {
+        "mainColor": "#0d47a1",
+        "beacon": {
+          "inner": "#0d47a1",
+          "outer": "#1565c0"
+        }
+      }
+    }
+  }
+}

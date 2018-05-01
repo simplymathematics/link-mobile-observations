@@ -1,0 +1,12 @@
+.idea/
+target/
+**/target
+.g8/
+logs/
+project/target/
+dynamodb-local/
+*.sc
+ui/app/dist
+ui/node_modules
+ui/package-lock.json
+npm-debug.log

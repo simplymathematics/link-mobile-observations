@@ -1,0 +1,35 @@
+{
+  "title": "File Failure",
+  "name": "ReceivedFileFailureMapping",
+  "filterTypes": [],
+  "mappings": [
+    {
+      "displayName": "Failed At",
+      "path": "$.failedAt",
+      "searchable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Failure Code",
+      "path": "$.failureCode",
+      "searchable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Failure Description",
+      "path": "$.failureDescription",
+      "searchable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Failure Type",
+      "path": "$.failureType",
+      "searchable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    }
+  ]
+}

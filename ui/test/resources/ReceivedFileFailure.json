@@ -1,0 +1,8 @@
+[
+  {
+    "failedAt": "2017-05-30T11:58:25.61+01:00[Europe/London]",
+    "failureCode": "INVALID_HEADER",
+    "failureDescription": "The header was malformed. It should start with an 'HDR' block. The actual header found was 'i am not a valid header'",
+    "failureType": "FILE_REJECTED_FAILURE"
+  }
+]

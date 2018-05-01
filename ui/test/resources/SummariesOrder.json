@@ -1,0 +1,47 @@
+[
+  {
+    "summaryType": "portIn",
+    "summaryStage": "Accepted",
+    "counts": {
+      "notDone": 0,
+      "done": 0,
+      "error": 0
+    }
+  },
+  {
+    "summaryType": "portIn",
+    "summaryStage": "Secured",
+    "counts": {
+      "notDone": 0,
+      "done": 0,
+      "error": 0
+    }
+  },
+  {
+    "summaryType": "portIn",
+    "summaryStage": "Activated",
+    "counts": {
+      "notDone": 0,
+      "done": 0,
+      "error": 0
+    }
+  },
+  {
+    "summaryType": "portIn",
+    "summaryStage": "File Processed",
+    "counts": {
+      "notDone": 0,
+      "done": 0,
+      "error": 0
+    }
+  },
+  {
+    "summaryType": "portIn",
+    "summaryStage": "Completed",
+    "counts": {
+      "notDone": 0,
+      "done": 0,
+      "error": 0
+    }
+  }
+]

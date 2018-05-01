@@ -1,0 +1,16 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "<AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:<TAG>",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "9000"
+
+    }
+  ],
+  "Logging": "/opt/docker/logs"
+}
+
+

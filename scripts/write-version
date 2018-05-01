@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+export TERM=dump
+sbt -Dsbt.log.noformat=true  "show version" | tail -2 | head -1 | cut -d ' ' -f2 | awk '{print "TAG="$1}' > version.txt
+echo Version
+cat ./version.txt
+# source ./version.txt
+# echo Version ->  $TAG

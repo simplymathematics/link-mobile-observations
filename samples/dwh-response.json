@@ -1,0 +1,37 @@
+[
+  {
+    "id": "bk-01-126659",
+    "latitude": "40.70098585",
+    "longitude": "-73.94208019",
+    "address": "2 GRAHAM AVENUE",
+    "status": "Ready to Assign"
+  },
+  {
+    "id": "bk-01-138951",
+    "latitude": "40.70167374876147",
+    "longitude": "-73.94248964825573",
+    "address": "15 DEBEVOISE STREET",
+    "status": "Ready to Install"
+  },
+  {
+    "id": "bk-01-109091",
+    "latitude": "40.70154219381847",
+    "longitude": "-73.9421692830818",
+    "address": "24 GRAHAM AVENUE",
+    "status": "Ready to Install"
+  },
+  {
+    "id": "bk-02-142555",
+    "latitude": "40.70367340871585",
+    "longitude": "-73.98667304505466",
+    "address": "44 JAY STREET",
+    "status": "DoITT Rejected"
+  },
+  {
+    "id": "bk-01-143981",
+    "latitude": "40.70193034387478",
+    "longitude": "-73.94223923853747",
+    "address": "32 GRAHAM AVENUE",
+    "status": "Ready to Install"
+  }
+]

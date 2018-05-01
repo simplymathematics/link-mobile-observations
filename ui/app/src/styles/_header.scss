@@ -1,0 +1,56 @@
+nav {
+  background-color: $paddington-blue;
+  border-color: #080808;
+  height: $header-height;
+  line-height:54px; /*line-height and height must match or rollover effect is out of place*/
+}
+
+nav .brand-logo {
+  padding: 12px 0px 0px 15px;
+}
+
+/*Stuff for searchbar*/
+
+nav .input-field input {
+  height: 100%;
+  font-size: 20px;
+  //border: none;
+  padding-left: 35px !important;
+}
+
+.input-field label.activeIcon {
+  color: #fefefe !important;
+  position: absolute;
+  top: -11.5px !important;
+  left: 5px !important;
+  font-size: 14px;
+  cursor: text;
+  transition: .2s ease-out;
+}
+
+nav .input-field label i {
+  color: #ffffff;
+  transition: color .3s;
+}
+
+ul.dropdown-content  {
+  position: absolute !important;
+  top: 54px !important;
+}
+
+ul .dropdown-content li a {
+  color: $paddington-blue;
+}
+
+li .dropdown-button i {
+  line-height: 56px !important;;
+}
+
+th {
+  width: auto !important;
+}
+
+i.header-icon {
+  height: inherit !important;
+  line-height: inherit !important;
+}

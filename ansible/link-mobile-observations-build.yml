@@ -1,0 +1,5 @@
+---
+- name: Build
+  hosts: localhost
+  vars_files:
+    - "group_vars/{{ appname }}/vars"

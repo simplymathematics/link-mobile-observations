@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+rm -rf sbt-react
+mkdir -p sbt-react
+cd sbt-react
+git clone git@github.com:dispalt/sbt-reactjs.git
+cd sbt-reactjs
+sbt publishLocal
+pwd
+cd ../..

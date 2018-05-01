@@ -1,0 +1,18 @@
+[
+  {
+    "actionCode": "01",
+    "actionStatus": "FF",
+    "dno": "TEST_UNSEARCHABLE_FIELD_VALUE",
+    "failure": {
+      "failedAt": "2017-06-01T10:07:30.568+01:00[Europe/London]",
+      "failureCode": "UNEXPECTED_BEHAVIOUR",
+      "failureDescription": "Unknown error. Unable to parse line 'MANGOES', reason: String index out of range: 24",
+      "failureType": "RECORD_FAILED_PROCESSING_FAILURE"
+    },
+    "msisdn": "447985680876",
+    "ono": "CN",
+    "originalRecord": "MANGOES",
+    "rno": "SK",
+    "transactionNumber": "SK00000006"
+  }
+]

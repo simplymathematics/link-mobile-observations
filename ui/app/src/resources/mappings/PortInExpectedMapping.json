@@ -1,0 +1,108 @@
+{
+  "title": "Port In List",
+  "name": "PortInExpectedMapping",
+  "filterTypes": ["outstanding", "completed"],
+  "actions": ["export"],
+  "mappings": [
+    {
+      "displayName": "Created Date",
+      "path": "$.orderCreatedAt",
+      "type" : "DATE",
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Port Date",
+      "path": "$.entityId.portDate",
+      "type" : "DATE",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "PAC",
+      "path": "$.entityId.pac",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Porting MSISDN",
+      "path": "$.entityId.portingMsisdn",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Sky Allocated MSISDN",
+      "path": "$.skyMsisdn",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Service ID",
+      "path": "$.serviceId",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "Operator ID",
+      "path": "$.operatorId",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 120,
+      "flexGrow": 1
+    },
+    {
+      "displayName": "DSP",
+      "path": "$.portInSecuredDetails.dspSyniverseCode",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.portInSecuredDetails.dnoSyniverseCode",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Expected",
+      "type": "CALCULATED",
+      "downloadable": true,
+      "path": "",
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Confirmed",
+      "type": "CALCULATED",
+      "downloadable": true,
+      "path": "",
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Error",
+      "type": "CALCULATED",
+      "downloadable": true,
+      "path": "",
+      "columnWidth": 60
+    },
+    {
+      "displayName": "Status",
+      "path": "$.status",
+      "searchable": true,
+      "downloadable": true,
+      "columnWidth": 180,
+      "flexGrow": 1
+    }
+  ]
+}

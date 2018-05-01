@@ -1,0 +1,52 @@
+{
+  "title": "Failed File Records",
+  "name": "ReceivedFileRecordMapping",
+  "filterTypes": [],
+  "mappings": [
+    {
+      "displayName": "MSISDN",
+      "path": "$.msisdn",
+      "searchable": true,
+      "columnWidth": 120
+    },
+    {
+      "displayName": "DNO",
+      "path": "$.dno",
+      "searchable": true,
+      "columnWidth": 40
+    },
+    {
+      "displayName": "RNO",
+      "path": "$.rno",
+      "searchable": true,
+      "columnWidth": 40
+    },
+    {
+      "displayName": "ONO",
+      "path": "$.ono",
+      "searchable": true,
+      "columnWidth": 40
+    },
+    {
+      "displayName": "Error Code",
+      "path": "$.failure.failureCode",
+      "searchable": true,
+      "columnWidth": 120,
+      "flexGrow": 2
+    },
+    {
+      "displayName": "Error Description",
+      "path": "$.failure.failureDescription",
+      "searchable": true,
+      "columnWidth": 180,
+      "flexGrow": 2
+    },
+    {
+      "displayName": "Original Record",
+      "path": "$.originalRecord",
+      "searchable": true,
+      "columnWidth": 100,
+      "flexGrow": 2
+    }
+  ]
+}
