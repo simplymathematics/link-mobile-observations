@@ -20,7 +20,7 @@ services:
         delay: 5s
         failure_action: rollback
     environment:
-      - VIRTUAL_HOST=link-mobile-observations.{{ env }}
+      - VIRTUAL_HOST=link-mobile-observations.{{ env }}.swarm.linksvc.com
       - SERVICE_PORTS=9000
       - DD_API_KEY={{ dd_api_key }}
       - DD_APP_KEY={{ dd_app_key }}
