@@ -6,7 +6,7 @@ networks:
       name: haproxy_net
 services:
   observations:
-    image: intersection/link-mobile-observations:fa43bf4e2420a56f780ed6611332c3c14795e3b8
+    image: 028957328603.dkr.ecr.us-east-1.amazonaws.com/intersection/link-mobile-observations:fa43bf4e2420a56f780ed6611332c3c14795e3b8
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -21,7 +21,7 @@ services:
         failure_action: rollback
     environment:
       - VIRTUAL_HOST=link-mobile-observations.{{ env }}
-      - SERVICE_PORTS=9000
+      - SERVICE_PORTS=9000q
       - DD_API_KEY={{ dd_api_key }}
       - DD_APP_KEY={{ dd_app_key }}
       - SERVICE=link-mobile
