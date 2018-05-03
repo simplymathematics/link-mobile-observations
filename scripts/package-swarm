@@ -31,6 +31,15 @@ echo "Docker local image created"
 
 docker images
 
+echo "package done"
+source ./git-version.txt
+echo GIT tag $GITTAG
+sed -i='' "s/<TAG>/$GITTAG/" ansible/swarm-upload.yml
+cat ansible/swarm-upload.yml
+aws s3 cp s3://dev-nyc-secrets/vault_pass .
+/usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-upload.yml
+
+
 
 #Point Beanstalk configuration file to correct image
 #sed -i='' "s/<AWS_ACCOUNT_ID>/$AWS_ACCOUNT_ID/" config/Dockerrun.aws.json
