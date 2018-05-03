@@ -28,6 +28,7 @@ steps:
       - ls -la ./ansible
       - echo "------"
       - ls -la ./ansible/files
+      - scripts/package-swarm
       - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-deploy.yml
 #    branches: master
     agents:
