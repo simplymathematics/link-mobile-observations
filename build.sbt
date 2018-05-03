@@ -1,5 +1,5 @@
 import com.github.mmizutani.sbt.gulp.PlayGulpPlugin
-import com.typesafe.sbt.packager.docker.{Cmd, ExecCmd}
+import com.typesafe.sbt.packager.docker.{Cmd, DockerVersion, ExecCmd}
 import sbt.Keys._
 import sbt.Path
 import PlayGulpPlugin._
@@ -7,7 +7,7 @@ import PlayGulpPlugin._
 name := """link-mobile-observations"""
 organization := "com.link"
 
-version := "1.0-SNAPSHOT"
+version := sys.env.getOrElse("GITTAG", default = "1.0-SNAPSHOT")
 
 lazy val Root = (project in file("."))
   .enablePlugins(PlayJava, UniversalDeployPlugin, DockerPlugin, SbtWeb)

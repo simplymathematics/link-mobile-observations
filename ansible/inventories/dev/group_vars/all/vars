@@ -1,7 +1,7 @@
 env: dev
 region: us-east-1
 
-version_tag: "{{ lookup('env','GITTAG') }}"
+version_tag: lookup('env','GITTAG')
 
 docker_email: '{{ secret_docker_email }}'
 docker_password: '{{ secret_docker_password }}'
