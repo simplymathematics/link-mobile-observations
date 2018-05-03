@@ -16,6 +16,11 @@ docker images -a | grep link | awk '{print $3}'
 ./scripts/build-sbt-reactjs
 
 sbt "npm install" > /dev/null
+
+echo Git tag $GITTAG
+cat ./git-version.txt
+
+
 sbt clean stage docker:publishLocal
 
 echo "Docker local image created"
