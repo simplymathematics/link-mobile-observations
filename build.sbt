@@ -9,6 +9,8 @@ organization := "com.link"
 
 version := sys.env.getOrElse("GITTAG", default = "1.0-SNAPSHOT")
 
+val f = println(" Version " + sys.env.get("GITTAG"))
+
 lazy val Root = (project in file("."))
   .enablePlugins(PlayJava, UniversalDeployPlugin, DockerPlugin, SbtWeb)
   .settings(scalacOptions ++= Seq("-deprecation", "-feature", "-Ypartial-unification"))
