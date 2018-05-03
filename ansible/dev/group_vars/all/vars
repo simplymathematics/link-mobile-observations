@@ -35,4 +35,4 @@ phoenix_mode: off
 asg_min_size: 1
 asg_max_size: 1
 
-pda_version_tag: lookup('env','version_tag')
+version_tag: lookup('env','GITTAG')
