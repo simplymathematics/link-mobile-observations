@@ -10,6 +10,10 @@
 - name: Upload
   hosts: localhost
   tasks:
+    - name: list
+      shell: "ls -la "
+    - name: list scripts
+      shell: "ls -la ./scripts"
     - name: show docker compose
       shell: "./scripts/package-swarm"
     - name: Log into Docker Hub
