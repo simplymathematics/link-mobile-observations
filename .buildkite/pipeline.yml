@@ -16,6 +16,10 @@ steps:
     agents:
       - queue=link-scala-dev-nyc
     command:
+      - scripts/write-git-version
+      - cat ./git-version.txt
+      - source ./git-version.txt
+      - echo GIT tag $GITTAG
       - scripts/package-swarm
       - aws s3 cp s3://dev-nyc-secrets/vault_pass .
       - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-upload.yml

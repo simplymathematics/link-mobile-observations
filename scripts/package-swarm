@@ -18,6 +18,7 @@ docker images -a | grep link | awk '{print $3}'
 sbt "npm install" > /dev/null
 
 echo Git tag $GITTAG
+source ./git-version.txt
 cat ./git-version.txt
 
 
