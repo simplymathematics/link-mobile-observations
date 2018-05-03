@@ -7,6 +7,20 @@
         content: '{{ manager_key }}'
         dest: /tmp/swarm_manager_id_rsa
         mode: 0600
+- name: Upload
+  hosts: localhost
+  tasks:
+    - name: Log into Docker Hub
+      docker_login:
+        username: '{{ docker_user }}'
+        password: '{{ docker_password }}'
+        email: '{{ docker_email }}'
+
+    - name: pacur/centos-7
+          repository: intersection/link-mobile-observations
+          tag: fa43bf4e2420a56f780ed6611332c3c14795e3b8
+          push: yes
+
 - name: Upload and run updated docker images in swarm stack
   hosts: manager
 #  hosts: localhost

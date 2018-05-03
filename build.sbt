@@ -35,7 +35,8 @@ libraryDependencies ++= Seq(
 )
 
 dockerExposedPorts := Seq(9000, 2551)
-dockerRepository := Some("028957328603.dkr.ecr.us-east-1.amazonaws.com/intersection")
+//dockerRepository := Some("028957328603.dkr.ecr.us-east-1.amazonaws.com/intersection")
+dockerRepository := Some("intersection")
 
 resolvers ++= Seq(
   "jcenter" at "https://jcenter.bintray.com/",
