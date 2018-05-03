@@ -22,22 +22,7 @@ steps:
     concurrency: 1
     concurrency_group: "link-mobile-observations"
     command:
-      - ls -la /usr/local/bin/
-      - echo "------"
-      - ls -la
-      - scripts/write-git-version
-      - echo "------"
-      - ls -la
-      - echo "------"
-      - cat ./git-version.txt
-      - source ./git-version.txt && echo GIT tag $GITTAG
-      - aws s3 cp s3://dev-nyc-secrets/vault_pass .
-      - echo "------"
-      - ls -la ./scripts
-      - ls -la ./ansible
-      - echo "------"
-      - ls -la ./ansible/files
-      - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-deploy.yml
+      - scripts/deploy-swarm
 #    branches: master
     agents:
       - queue=link-aws-dev
