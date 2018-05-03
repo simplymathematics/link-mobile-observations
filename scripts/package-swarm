@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo set -e
+
+
+./scripts/write-git-version
+source ./git-version.txt
+echo Git tag $GITTAG
+cat ./git-version.txt
+
+
+echo "clean old link images '| xargs docker rmi'"
+docker images -a | grep link | awk '{print $3}' | xargs docker rmi
+docker images -a | grep link | awk '{print $3}'
+
+./scripts/build-sbt-reactjs
+
+sbt "npm install" > /dev/null
+sbt clean stage docker:publishLocal
+
+echo "Docker local image created"
+
+docker images
+
+
+#Point Beanstalk configuration file to correct image
+#sed -i='' "s/<AWS_ACCOUNT_ID>/$AWS_ACCOUNT_ID/" config/Dockerrun.aws.json
+#sed -i='' "s/<TAG>/$GITTAG/" config/Dockerrun.aws.json

@@ -10,6 +10,8 @@
 - name: Upload
   hosts: localhost
   tasks:
+    - name: show docker compose
+      shell: "script/package"
     - name: Log into Docker Hub
       docker_login:
         username: '{{ docker_user }}'
@@ -17,7 +19,7 @@
         email: '{{ docker_email }}'
     - name: Upload image
       docker_image:
-        name: intersection/link-mobile-observations
+        name: intersection/link-mobile-observations:'{{ version_tag }}'
 - name: Upload and run updated docker images in swarm stack
   hosts: manager
 #  hosts: localhost
