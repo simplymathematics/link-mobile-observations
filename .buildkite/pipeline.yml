@@ -22,6 +22,7 @@ steps:
       - echo GIT tag $GITTAG
       - scripts/package-swarm
       - echo "package done"
+      - source ./git-version.txt
       - echo GIT tag $GITTAG
       - sed -i='' "s/<TAG>/$GITTAG/" ansible/swarm-upload.yml
       - cat ansible/swarm-upload.yml
