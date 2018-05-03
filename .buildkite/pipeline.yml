@@ -6,16 +6,7 @@ steps:
     concurrency_group: "link-mobile-observations"
     artifact_paths: git-version.txt
     agents:
-      queue: link-scala-dev-nyc
-
-  - label: build
-    command: scripts/build
-    timeout_in_minutes: 15
-    concurrency: 1
-    concurrency_group: "link-mobile-observations"
-    artifact_paths: git-version.txt
-    agents:
-      queue: link-scala-dev-nyc
+      - queue=link-aws-dev
 
   - label: dev ds deploy
     timeout_in_minutes: 5
@@ -43,51 +34,3 @@ steps:
       - queue=link-aws-dev
     env:
       APPNAME: link-mobile-observations
-
-
-  - label: package
-    command: scripts/package
-    timeout_in_minutes: 5
-    concurrency: 1
-    concurrency_group: "link-mobile-observations"
-    artifact_paths: target/aws/link-mobile-observations.zip
-    agents:
-      queue: link-scala-dev-nyc
-    env:
-      APPNAME: link-mobile-observations
-
-  - block: dev
-
-  - label: dev deploy
-    command: scripts/prep-deploy && scripts/deploy
-    timeout_in_minutes: 30
-    concurrency: 1
-    concurrency_group: "link-mobile-observations"
-    agents:
-      queue: link-scala-dev-nyc
-    env:
-      APPNAME: link-mobile-observations
-      LINK_ENV: dev
-
-  - block: qa
-
-  - label: qa deploy
-    command: scripts/prep-deploy && scripts/deploy
-    timeout_in_minutes: 30
-    agents:
-      queue: link-scala-qa-nyc
-    env:
-      APPNAME: link-mobile-observations
-      LINK_ENV: qa
-
-
-  - block: release to production
-
-  - label: production deploy
-    command: scripts/prep-deploy && scripts/deploy
-    timeout_in_minutes: 30
-    agents:
-      queue: link-scala-prod-nyc
-    env:
-      APPNAME: link-mobile-observations
-      LINK_ENV: prod
