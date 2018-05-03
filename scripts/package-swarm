@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+echo set -e
 
 
 ./scripts/write-git-version
