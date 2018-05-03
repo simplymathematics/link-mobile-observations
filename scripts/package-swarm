@@ -6,8 +6,8 @@ set -e
 ./scripts/write-git-version
 
 echo "clean old link images '| xargs docker rmi'"
-docker images -a | grep link | awk '{print $3}' | xargs docker rmi
-docker images -a | grep link | awk '{print $3}'
+docker rmi $(docker images -a | grep link | awk '{print $3}') --force
+
 
 ./scripts/build-sbt-reactjs
 
