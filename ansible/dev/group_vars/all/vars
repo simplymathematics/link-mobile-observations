@@ -35,4 +35,4 @@ phoenix_mode: off
 asg_min_size: 1
 asg_max_size: 1
 
-version_tag: intersection/link-mobile-observations::" {{lookup('env','GITTAG')}} "
+version_tag: lookup('env','GITTAG')
