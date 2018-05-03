@@ -7,17 +7,6 @@
         content: '{{ manager_key }}'
         dest: /tmp/swarm_manager_id_rsa
         mode: 0600
-- name: Upload
-  hosts: localhost
-  tasks:
-    - name: Log into Docker Hub
-      docker_login:
-        username: '{{ docker_user }}'
-        password: '{{ docker_password }}'
-        email: '{{ docker_email }}'
-    - name: Upload image
-      docker_image:
-        name: intersection/link-mobile-observations:'{{ version_tag }}'
 - name: Upload and run updated docker images in swarm stack
   hosts: manager
 #  hosts: localhost

@@ -8,6 +8,18 @@ steps:
     agents:
       - queue=link-aws-dev
 
+  - label: Upload docker image
+    command: scripts/write-git-version
+    timeout_in_minutes: 10
+    concurrency: 1
+    concurrency_group: "link-mobile-observations"
+    agents:
+      - queue=link-scala-dev-nyc
+    command:
+      - scripts/package-swarm
+      - aws s3 cp s3://dev-nyc-secrets/vault_pass .
+      - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-upload.yml
+
   - label: dev ds deploy
     timeout_in_minutes: 5
     concurrency: 1
@@ -28,7 +40,6 @@ steps:
       - ls -la ./ansible
       - echo "------"
       - ls -la ./ansible/files
-      - scripts/package-swarm
       - /usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-deploy.yml
 #    branches: master
     agents:
