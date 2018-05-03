@@ -15,12 +15,10 @@
         username: '{{ docker_user }}'
         password: '{{ docker_password }}'
         email: '{{ docker_email }}'
-
     - name: Upload image
         repository: intersection/link-mobile-observations
         tag: fa43bf4e2420a56f780ed6611332c3c14795e3b8
         push: yes
-
 - name: Upload and run updated docker images in swarm stack
   hosts: manager
 #  hosts: localhost
