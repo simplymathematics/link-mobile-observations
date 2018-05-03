@@ -9,7 +9,7 @@
         email: '{{ docker_email }}'
     - name: Upload image
       docker_image:
-        name: intersection/link-mobile-observations:6832cf43ffdc5538a6ef87d3af09ff545067a1f2
+        name: intersection/link-mobile-observations:<TAG>
     - name: Log out of Docker Hub
       docker_login:
         state: absent

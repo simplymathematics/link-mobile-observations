@@ -24,6 +24,9 @@ cat ./git-version.txt
 
 sbt clean stage docker:publishLocal
 
+echo " Docker tag  "
+docker tag intersection/link-mobile-observations:1.0-SNAPSHOT intersection/link-mobile-observations:$GITTAG
+
 echo "Docker local image created"
 
 docker images
