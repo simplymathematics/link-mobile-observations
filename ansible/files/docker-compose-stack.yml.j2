@@ -6,7 +6,7 @@ networks:
       name: haproxy_net
 services:
   observations:
-    image: link-mobile-observations:<TAG>
+    image: intersection/link-mobile-observations:<TAG>
     deploy:
       placement:
         constraints: [node.role == worker]
