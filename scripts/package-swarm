@@ -18,22 +18,20 @@ echo Git Tag $GITTAG
 
 
 sbt clean stage docker:publishLocal
-
-echo " Docker tag  "
-docker tag intersection/link-mobile-observations:1.0-SNAPSHOT intersection/link-mobile-observations:$GITTAG
-
 echo "Docker local image created"
 
-docker images
+docker tag intersection/link-mobile-observations:1.0-SNAPSHOT intersection/link-mobile-observations:$GITTAG
+echo " Docker tag  done"
 
-echo "package done"
-sed -i='' "s/<TAG>/$GITTAG/" ansible/swarm-upload.yml
-cat ansible/swarm-upload.yml
-aws s3 cp s3://dev-nyc-secrets/vault_pass .
-/usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-upload.yml
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
+docker push intersection/link-mobile-observations:$GITTAG
 
+docker logout
 
-#Point Beanstalk configuration file to correct image
-#sed -i='' "s/<AWS_ACCOUNT_ID>/$AWS_ACCOUNT_ID/" config/Dockerrun.aws.json
-#sed -i='' "s/<TAG>/$GITTAG/" config/Dockerrun.aws.json
+#echo "package done"
+#sed -i='' "s/<TAG>/$GITTAG/" ansible/swarm-upload.yml
+#cat ansible/swarm-upload.yml
+#aws s3 cp s3://dev-nyc-secrets/vault_pass .
+#/usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-upload.yml
+
