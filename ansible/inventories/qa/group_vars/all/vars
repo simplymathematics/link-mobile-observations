@@ -1,28 +1,16 @@
 env: qa
 region: us-east-1
-key_name: link-non-prod-feb-2018
-instance_type: t2.small
-cert: arn:aws:acm:us-east-1:028957328603:certificate/879b03f9-a895-4ec0-a8c3-b23ecaf5125e
-dynamodb_url: jdbc:mysql://fuhgavi-mysql.cxuxt6izrok4.us-east-1.rds.amazonaws.com:3306/fuhgavi-qa?characterEncoding=UTF-8
-vpc:
-  stack_outputs:
-    BastionSecurityGroup: sg-afa875d2
-    VpcAlarmTopicArn: arn:aws:sns:us-east-1:028957328603:qa-Sns-Vpc-01
-    VpcId: vpc-e5e10683
-    az0: us-east-1b
-    az1: us-east-1c
-    bastionIp: 52.2.112.72
-    cidrPrivate0: 172.28.0.0/19
-    cidrPrivate1: 172.28.32.0/19
-    cidrPublic0: 172.28.240.0/22
-    cidrPublic1: 172.28.244.0/22
-    subnetPrivate0: subnet-e72b86ca
-    subnetPrivate1: subnet-9459c5dd
-    subnetPublic0: subnet-e42b86c9
-    subnetPublic1: subnet-9759c5de
-subnets: "{{ vpc.stack_outputs.subnetPrivate0 }},{{ vpc.stack_outputs.subnetPrivate1 }}"
-elb_subnets: "{{ vpc.stack_outputs.subnetPublic0 }},{{ vpc.stack_outputs.subnetPublic1 }}"
-phoenix_mode: off
 
-asg_min_size: 1
-asg_max_size: 1
+version_tag: lookup('env','GITTAG')
+
+docker_email: '{{ secret_docker_email }}'
+docker_password: '{{ secret_docker_password }}'
+docker_user: '{{ secret_docker_user }}'
+
+dd_api_key: "{{ dd_apikey_encrypted }}"
+dd_app_key: "{{ dd_appkey_encrypted }}"
+
+splunk_host: "{{ secret_splunk_host }}"
+splunk_token: "{{ secret_splunk_token }}"
+
+manager_key: "{{ secret_manager_key }}"

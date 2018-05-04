@@ -28,10 +28,3 @@ docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 docker push intersection/link-mobile-observations:$GITTAG
 
 docker logout
-
-#echo "package done"
-#sed -i='' "s/<TAG>/$GITTAG/" ansible/swarm-upload.yml
-#cat ansible/swarm-upload.yml
-#aws s3 cp s3://dev-nyc-secrets/vault_pass .
-#/usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-upload.yml
-
