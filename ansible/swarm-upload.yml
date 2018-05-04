@@ -10,7 +10,7 @@
     - name: Upload image
       docker_image:
         name: "intersection"
-        repository: "intersection/link-mobile-observations:<TAG>"
+        repository: "intersection/link-mobile-observations"
         tag: "<TAG>"
         state: present
         push: yes
