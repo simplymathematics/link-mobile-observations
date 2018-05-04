@@ -9,7 +9,11 @@
         email: '{{ docker_email }}'
     - name: Upload image
       docker_image:
-        name: intersection/link-mobile-observations:<TAG>
+        name: "intersection"
+        repository: "intersection/link-mobile-observations:<TAG>"
+        tag: "<TAG>"
+        state: present
+        push: yes
     - name: Log out of Docker Hub
       docker_login:
         state: absent
