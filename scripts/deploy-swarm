@@ -7,8 +7,10 @@ aws s3 cp s3://dev-nyc-secrets/vault_pass .
 ./scripts/write-git-version
 source ./git-version.txt
 echo GIT tag $GITTAG
+echo GIT tag $BUILDKITE_COMMIT
+
 sed -i='' "s/<TAG>/$GITTAG/" ansible/files/docker-compose-stack.yml.j2
 cat ansible/swarm-deploy.yml
 
 
-/usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/dev ansible/swarm-deploy.yml
+/usr/local/bin/ansible-playbook -vvv --vault-password-file=vault_pass -i ansible/inventories/$LINK_ENV ansible/swarm-deploy.yml

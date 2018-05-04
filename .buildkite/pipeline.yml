@@ -1,15 +1,5 @@
 steps:
-  - label: gittag
-    command: scripts/write-git-version
-    timeout_in_minutes: 1
-    concurrency: 1
-    concurrency_group: "link-mobile-observations"
-    artifact_paths: git-version.txt
-    agents:
-      - queue=link-aws-dev
-
   - label: Upload docker image
-    command: scripts/write-git-version
     timeout_in_minutes: 10
     concurrency: 1
     concurrency_group: "link-mobile-observations"
@@ -17,6 +7,9 @@ steps:
       - queue=link-scala-dev-nyc
     command:
       - scripts/package-swarm
+
+  - block: dev
+
   - label: dev ds deploy
     timeout_in_minutes: 5
     concurrency: 1
@@ -28,3 +21,19 @@ steps:
       - queue=link-aws-dev
     env:
       APPNAME: link-mobile-observations
+      LINK_ENV: dev
+
+  - block: qa
+
+  - label: QA ds deploy
+    timeout_in_minutes: 5
+    concurrency: 1
+    concurrency_group: "link-mobile-observations"
+    command:
+      - scripts/deploy-swarm
+#    branches: master
+    agents:
+      - queue=link-aws-dev
+    env:
+      APPNAME: link-mobile-observations
+      LINK_ENV: qa
