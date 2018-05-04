@@ -27,11 +27,11 @@
     - name: Log out of Docker Hub
       docker_login:
         state: absent
-#- name: Tell Datadog about the deployment
-#  hosts: localhost
-#  tasks:
-#    - datadog_event:
-#        title: PDA deployment in {{ env }}
-#        text: Build {{ lookup('env', 'BUILDKITE_BUILD_NUMBER') }} ({{ version_tag }})
-#        api_key: '{{ dd_api_key }}'
-#        app_key: '{{ dd_app_key }}'
+- name: Tell Datadog about the deployment
+  hosts: localhost
+  tasks:
+    - datadog_event:
+        title: link-mobile-observations deployment in {{ env }}
+        text: Build {{ lookup('env', 'BUILDKITE_BUILD_NUMBER') }} ({{ version_tag }})
+        api_key: '{{ dd_api_key }}'
+        app_key: '{{ dd_app_key }}'
