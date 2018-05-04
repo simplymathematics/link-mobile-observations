@@ -1,8 +1,0 @@
-[dev-03]
-localhost
-
-[dev-03:children]
-eb_deployer
-
-[eb_deployer]
-localhost

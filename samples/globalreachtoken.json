@@ -1,8 +1,0 @@
-{
-  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL3NlcnZpY2VzLnN0YWdpbmcub2R5c3N5cy5uZXQvYWNjb3VudC91c2Vycy8zNjEzNzkxMyIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE1MTEyMDQwODQsImp0aSI6ImM0M2U2ZDYyLWU5MzQtNDg2MC05NjA0LTQ3NTJmYTc1ZTZmZiIsImNsaWVudF9pZCI6IkdSLUlOVDAwMS9pbnRlcnNlY3Rpb25Ab2R5c3N5cy5uZXQifQ.kylreBvQHvA6DEIg5wQzQuU8NPYjZUW-vBaPEVA4Y70zf9Fvp5DyFKSQFzexQF5bCBRj63wbScEw8LT46kOUEUApATJrfUqm1ULHuVxhZ9_3DZPZR6ctV7NxK2_75ojpAZXk4Df4FpnB6bO3PvkLFgB5krrnPwOArPZuhNn0ONK7DZ4Mv9-Vwvfn_CfdA0LHe8tIcGbFT35yCO2dJwbB3XM8IzE03N6rvNQjeWOgXIvvmwWsF4DE3epLJ87zeidKvdMJ_LYODuHAZUpNFwRBCKURsv22vP-w9uWCHL6I3PjJE0MtQDviyMBY5HzIcA40Z4Hx7sasQOnP_M3zdfHjtw",
-  "token_type": "bearer",
-  "expires_in": 4999,
-  "scope": "all",
-  "sub": "https://services.staging.odyssys.net/account/users/36137913",
-  "jti": "c43e6d62-e934-4860-9604-4752fa75e6ff"
-}
